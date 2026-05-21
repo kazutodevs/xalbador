@@ -24,6 +24,13 @@ export async function authenticate(req, res, next) {
   }
 }
 
+export function authorizeAdmin(req, res, next) {
+  if (!req.user?.admin || req.user.admin !== 1) {
+    return res.status(403).json({ error: 'Admin access required' })
+  }
+  next()
+}
+
 export async function optionalAuth(req, res, next) {
   try {
     const authHeader = req.headers.authorization

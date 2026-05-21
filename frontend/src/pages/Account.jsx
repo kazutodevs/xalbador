@@ -14,6 +14,7 @@ import {
 } from 'lucide-react'
 import { useAuth } from '@context/AuthContext'
 import api from '@services/api'
+import AdminPanel from '@components/admin/AdminPanel'
 import Card from '@components/common/Card'
 import { TableSkeleton } from '@components/common/Skeleton'
 import { formatDate, formatCurrency, classNames } from '@utils/helpers'
@@ -25,6 +26,7 @@ export default function Account() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [purchases, setPurchases] = useState([])
   const [loading, setLoading] = useState(true)
+  const [showAdminPanel, setShowAdminPanel] = useState(false)
 
   const activeTab = searchParams.get('tab') || 'purchases'
 
@@ -216,7 +218,27 @@ export default function Account() {
       <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-6">
         {t('account.settingsTitle')}
       </h2>
-      <p className="text-slate-500">{t('account.settingsComingSoon')}</p>
+      <p className="text-slate-500 mb-6">{t('account.settingsComingSoon')}</p>
+
+      {Number(user?.admin) === 1 ? (
+        <div className="space-y-4">
+          <div className="rounded-3xl border border-primary-200 bg-primary-50 p-4 text-sm text-primary-700 dark:border-primary-700 dark:bg-primary-950/20 dark:text-primary-300">
+            You are an admin. Use the button below to open the admin panel and add products or categories.
+          </div>
+          <button
+            type="button"
+            onClick={() => setShowAdminPanel((prev) => !prev)}
+            className="rounded-2xl bg-primary-600 px-5 py-3 text-white font-semibold transition hover:bg-primary-700"
+          >
+            {showAdminPanel ? 'Hide Admin Panel' : 'Open Admin Panel'}
+          </button>
+          {showAdminPanel && <AdminPanel />}
+        </div>
+      ) : (
+        <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
+          Admin panel is available only for admin users.
+        </div>
+      )}
     </Card>
   )
 
