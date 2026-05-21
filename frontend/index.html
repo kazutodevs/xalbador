@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Xalbador - Premium digital services, hosting, and development solutions. Fast, reliable, and affordable services for your projects." />
+    <meta name="keywords" content="hosting, game server, SA:MP hosting, Minecraft hosting, bot development, Discord bot, custom script, digital services" />
+    <meta name="author" content="Xalbador" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://Xalbador.com/" />
+    <meta property="og:title" content="Xalbador - Premium Digital Services & Hosting" />
+    <meta property="og:description" content="Professional hosting, development, and digital services for your projects. Fast, reliable, and affordable." />
+    <meta property="og:image" content="/og-image.jpg" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://Xalbador.com/" />
+    <meta property="twitter:title" content="Xalbador - Premium Digital Services & Hosting" />
+    <meta property="twitter:description" content="Professional hosting, development, and digital services for your projects. Fast, reliable, and affordable." />
+    <meta property="twitter:image" content="/og-image.jpg" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#3b82f6" />
+    <meta name="msapplication-TileColor" content="#3b82f6" />
+    
+    <!-- Preconnect to external domains for better performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://api.Xalbador.com" />
+    
+    <!-- Google Fonts - Inter & Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    
+    <!-- Canvas Confetti for success page -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js" defer></script>
+    
+    <title>Xalbador - Premium Digital Services & Hosting Platform</title>
+    
+    <!-- Structured Data / Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Xalbador",
+      "description": "Premium digital services, hosting, and development solutions",
+      "url": "https://Xalbador.com",
+      "logo": "https://Xalbador.com/logo.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+62-xxx-xxxx-xxxx",
+        "contactType": "customer service",
+        "availableLanguage": ["English", "Indonesian"]
+      },
+      "sameAs": [
+        "https://twitter.com/Xalbador",
+        "https://discord.gg/Xalbador",
+        "https://github.com/Xalbador"
+      ]
+    }
+    </script>
+    
+    <style>
+      /* Critical CSS - Loading State */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      html {
+        scroll-behavior: smooth;
+      }
+      
+      body {
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background: #ffffff;
+        color: #0f172a;
+      }
+      
+      /* Dark mode initial */
+      @media (prefers-color-scheme: dark) {
+        body {
+          background: #020617;
+          color: #f8fafc;
+        }
+      }
+      
+      /* Loading Screen */
+      #loading-screen {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+        z-index: 9999;
+        transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+      }
+      
+      @media (prefers-color-scheme: dark) {
+        #loading-screen {
+          background: linear-gradient(135deg, #020617 0%, #0c1e3a 100%);
+        }
+      }
+      
+      #loading-screen.hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
+      
+      .loading-logo {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 24px;
+        animation: float 3s ease-in-out infinite;
+        box-shadow: 0 10px 40px rgba(59, 130, 246, 0.3);
+      }
+      
+      .loading-logo span {
+        font-size: 48px;
+        font-weight: 800;
+        color: white;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+      }
+      
+      .loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 4px solid rgba(59, 130, 246, 0.1);
+        border-top-color: #3b82f6;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      
+      .loading-text {
+        margin-top: 20px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #64748b;
+      }
+      
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+      
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+      }
+      
+      /* Hide scrollbar during loading */
+      body.loading {
+        overflow: hidden;
+      }
+      
+      /* Prevent FOUC (Flash of Unstyled Content) */
+      #root {
+        opacity: 0;
+        transition: opacity 0.3s ease-in;
+      }
+      
+      #root.loaded {
+        opacity: 1;
+      }
+    </style>
+  </head>
+  
+  <body class="loading">
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+      <div class="loading-logo">
+        <span>C</span>
+      </div>
+      <div class="loading-spinner"></div>
+      <p class="loading-text">Loading Xalbador...</p>
+    </div>
+    
+    <!-- React App Root -->
+    <div id="root"></div>
+    
+    <!-- Module Script -->
+    <script type="module" src="/src/main.jsx"></script>
+    
+    <!-- Loading Script -->
+    <script>
+      // Remove loading screen when app is ready
+      window.addEventListener('load', () => {
+        const loadingScreen = document.getElementById('loading-screen');
+        const root = document.getElementById('root');
+        
+        // Small delay for smooth transition
+        setTimeout(() => {
+          loadingScreen.classList.add('hidden');
+          root.classList.add('loaded');
+          document.body.classList.remove('loading');
+          
+          // Remove loading screen from DOM after animation
+          setTimeout(() => {
+            if (loadingScreen.parentNode) {
+              loadingScreen.parentNode.removeChild(loadingScreen);
+            }
+          }, 500);
+        }, 500);
+      });
+      
+      // Fallback: Remove loading screen after 10 seconds
+      setTimeout(() => {
+        const loadingScreen = document.getElementById('loading-screen');
+        const root = document.getElementById('root');
+        if (loadingScreen && !loadingScreen.classList.contains('hidden')) {
+          loadingScreen.classList.add('hidden');
+          root.classList.add('loaded');
+          document.body.classList.remove('loading');
+        }
+      }, 10000);
+      
+      // Theme detection and application
+      (function() {
+        const theme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (theme === 'dark' || (!theme && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+    
+    <!-- Service Worker Registration (optional for PWA) -->
+    <script>
+      // Register service worker for PWA support
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js')
+            .then(registration => {
+              console.log('SW registered:', registration);
+            })
+            .catch(error => {
+              console.log('SW registration failed:', error);
+            });
+        });
+      }
+    </script>
+    
+    <!-- No Script Fallback -->
+    <noscript>
+      <div style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        text-align: center;
+        padding: 20px;
+        font-family: system-ui, -apple-system, sans-serif;
+      ">
+        <div>
+          <h1 style="font-size: 24px; margin-bottom: 16px; color: #1e293b;">
+            JavaScript Required
+          </h1>
+          <p style="color: #64748b; max-width: 400px;">
+            Xalbador requires JavaScript to be enabled in your browser to function properly.
+            Please enable JavaScript and refresh the page.
+          </p>
+        </div>
+      </div>
+    </noscript>
+  </body>
+</html>
