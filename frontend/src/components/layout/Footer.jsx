@@ -38,8 +38,12 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <Link to="/" className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center shadow-lg shadow-primary-500/30">
-                <span className="text-white font-bold text-2xl">C</span>
+              <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center shadow-lg shadow-primary-500/30 overflow-hidden">
+                <img
+                  src="https://kcdanyszvnympanrtjff.supabase.co/storage/v1/object/sign/xalbador/!xalbador.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mYzhmZjUxNC1lNmJiLTQzNDctYTM2YS1jMjdmZmI1MzY0MzIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ4YWxiYWRvci8heGFsYmFkb3IucG5nIiwiaWF0IjoxNzc5MzczNzg3LCJleHAiOjE4NzM5ODE3ODd9.rviJlCkpex_r8AVCUAY-xW59dkE5CaNJi_9HeXbsEZ4"
+                  alt="Xalbador"
+                  className="w-10 h-10 object-cover rounded-lg"
+                />
               </div>
               <span className="text-2xl font-bold font-display gradient-text">
                 Xalbador
