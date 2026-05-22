@@ -33,7 +33,7 @@ EXPOSE 3001
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:3001/api/health', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
+  CMD node -e "require('http').get('https://xalbador-8lqs4m7f.b4a.run/api/health', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
 
 # Use dumb-init to handle signals
 ENTRYPOINT ["dumb-init", "--"]

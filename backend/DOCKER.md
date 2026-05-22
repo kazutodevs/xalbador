@@ -27,7 +27,7 @@ cp .env.example .env  # if needed
 # Build and start the development container
 docker-compose up --build
 
-# Server runs at http://localhost:3001
+# Server runs at https://xalbador-8lqs4m7f.b4a.run
 ```
 
 The container watches for file changes and restarts automatically.
@@ -109,7 +109,7 @@ docker push your-registry/xalbador-backend:latest
 The production image includes a health check at `/api/health`:
 
 ```bash
-curl http://localhost:3001/api/health
+curl https://xalbador-8lqs4m7f.b4a.run/api/health
 # Response: { "status": "ok", "timestamp": "...", "environment": "production" }
 ```
 
