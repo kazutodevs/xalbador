@@ -19,7 +19,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'https://xalbador-8lqs4m7f.b4a.run',
+        target: 'https://xalbador-production.up.railway.app',
         changeOrigin: true,
       },
     },

@@ -14,12 +14,25 @@ export default function Store() {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
+  const [isMobile, setIsMobile] = useState(false)
 
   const selectedCategory = searchParams.get('category')
 
   useEffect(() => {
     fetchProducts()
   }, [selectedCategory])
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    checkMobile()
+
+    window.addEventListener('resize', checkMobile)
+
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   const fetchProducts = async () => {
     setLoading(true)
@@ -44,25 +57,35 @@ export default function Store() {
 
   const filteredProducts = products.filter((product) => {
     if (!search) return true
+
     const searchLower = search.toLowerCase()
+
     return (
-      product.name_en.toLowerCase().includes(searchLower) ||
-      product.name_id.toLowerCase().includes(searchLower)
+      product.name_en?.toLowerCase().includes(searchLower) ||
+      product.name_id?.toLowerCase().includes(searchLower)
     )
   })
+
+  const motionProps = isMobile
+    ? {}
+    : {
+        initial: { opacity: 0, y: 20 },
+        animate: { opacity: 1, y: 0 }
+      }
 
   return (
     <div className="min-h-screen pt-24 pb-12">
       <div className="container mx-auto px-4">
+
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          {...motionProps}
           className="mb-12"
         >
           <h1 className="text-4xl md:text-5xl font-bold font-display mb-4">
             <span className="gradient-text">{t('store.title')}</span>
           </h1>
+
           <p className="text-xl text-slate-600 dark:text-slate-400">
             {t('store.subtitle')}
           </p>
@@ -70,14 +93,13 @@ export default function Store() {
 
         {/* Search & Filters */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
+          {...motionProps}
+          transition={isMobile ? {} : { delay: 0.1 }}
           className="space-y-6 mb-12"
         >
-          {/* Search */}
           <div className="relative max-w-md">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+
             <input
               type="text"
               value={search}
@@ -87,14 +109,13 @@ export default function Store() {
             />
           </div>
 
-          {/* Categories */}
           <CategoryFilter
             selected={selectedCategory}
             onSelect={handleCategorySelect}
           />
         </motion.div>
 
-        {/* Products Grid */}
+        {/* Products */}
         {loading ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {Array.from({ length: 8 }).map((_, i) => (
@@ -103,21 +124,24 @@ export default function Store() {
           </div>
         ) : filteredProducts.length === 0 ? (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            {...motionProps}
             className="text-center py-20"
           >
-            <p className="text-xl text-slate-500">{t('store.noProducts')}</p>
+            <p className="text-xl text-slate-500">
+              {t('store.noProducts')}
+            </p>
           </motion.div>
         ) : (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
+            {...motionProps}
+            transition={isMobile ? {} : { delay: 0.2 }}
             className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
           >
             {filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard
+                key={product.id}
+                product={product}
+              />
             ))}
           </motion.div>
         )}
