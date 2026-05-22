@@ -5,7 +5,7 @@ export const config = {
   host: process.env.HOST,
   
   frontendUrl: process.env.FRONTEND_URL || 'https://xalbador.kazuto.biz.id',
-  backendUrl: process.env.BACKEND_URL || 'https://xalbador.vercel.app',
+  backendUrl: process.env.BACKEND_URL || 'https://xalbador-production.up.railway.app',
   
   supabase: {
     url: 'https://kcdanyszvnympanrtjff.supabase.co',
