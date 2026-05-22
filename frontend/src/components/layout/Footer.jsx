@@ -104,7 +104,7 @@ export default function Footer() {
                 transition={{ repeat: Infinity, duration: 2 }}
                 className="text-red-500"
               >
-                ❤️
+                Prince
               </motion.span>
               <span className="text-slate-500 text-sm">{t('footer.inIndonesia')}</span>
             </div>

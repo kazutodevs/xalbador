@@ -175,12 +175,13 @@ export default function Home() {
               {t('cta.subtitle')}
             </p>
             <Link to="/auth">
-              <Button
-                size="lg"
-                className="bg-white text-primary-600 hover:bg-primary-50 shadow-2xl"
-              >
-                {t('cta.button')}
-              </Button>
+<Button
+  size="lg"
+  variant="secondary"
+  className="bg-white text-primary-700 hover:bg-white/90 shadow-2xl"
+>
+  {t('cta.button')}
+</Button>
             </Link>
           </motion.div>
         </div>

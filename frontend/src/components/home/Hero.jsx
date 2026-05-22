@@ -93,8 +93,8 @@ export default function Hero() {
           >
             <Link to="/auth">
               <Button size="lg" className="group">
-                {t('hero.getStarted')}
-                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                {t('hero.getStarted')} 
+               
               </Button>
             </Link>
             <Link to="/auth">
@@ -114,7 +114,7 @@ export default function Hero() {
             {[
               { value: '99.9%', label: t('hero.uptime') },
               { value: '24/7', label: t('hero.support') },
-              { value: '5K+', label: t('hero.customers') },
+              { value: '5+', label: t('hero.customers') },
             ].map((stat, index) => (
               <div key={index} className="text-center">
                 <p className="text-3xl md:text-4xl font-bold text-primary-600 dark:text-primary-400">

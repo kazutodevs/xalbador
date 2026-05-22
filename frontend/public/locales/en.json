@@ -43,7 +43,7 @@
     "subtitle": "Comprehensive digital services tailored to your needs",
     "hosting": {
       "title": "Game Hosting",
-      "description": "High-performance hosting for SA:MP, MTA, FiveM, and Minecraft servers"
+      "description": "High-performance hosting for SA:MP and Minecraft servers"
     },
     "bot": {
       "title": "Bot Development",
@@ -194,7 +194,7 @@
     "terms": "Terms of Service",
     "refund": "Refund Policy",
     "rights": "All rights reserved.",
-    "madeWith": "Made with",
+    "madeWith": "Made by",
     "inIndonesia": "in Indonesia"
   },
   "notFound": {
