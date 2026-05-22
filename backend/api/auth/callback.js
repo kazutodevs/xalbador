@@ -2,7 +2,7 @@ import { supabase } from '../../lib/supabase.js'
 import { createSession } from '../../lib/auth.js'
 import { cors, handleOptions } from '../../lib/middleware.js'
 
-const FRONTEND_URL = process.env.FRONTEND_URL
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000'
 
 export default async function handler(req, res) {
   if (handleOptions(req, res)) return
@@ -96,7 +96,7 @@ async function handleDiscordCallback(code) {
   const redirectUri = `${FRONTEND_URL}/api/auth/callback?provider=discord`
 
   // Exchange code for tokens
-  const tokenResponse = await fetch('https://discord.com/api/oauth2/token)', {
+  const tokenResponse = await fetch('https://discord.com/api/oauth2/token', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({
