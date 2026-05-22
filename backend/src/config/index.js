@@ -2,6 +2,7 @@ export const config = {
   port: parseInt(process.env.PORT, 10) || 3001,
   nodeEnv: process.env.NODE_ENV || 'development',
   paymentMode: process.env.PAYMENT_MODE || 'test',
+  host: process.env.HOST || 'localhost',
   
   frontendUrl: process.env.FRONTEND_URL || 'http://localhost:3000',
   backendUrl: process.env.BACKEND_URL || 'http://localhost:3001',
@@ -52,6 +53,12 @@ if (config.nodeEnv === 'production') {
   const missing = required.filter((key) => !process.env[key])
   if (missing.length > 0) {
     console.error('Missing required environment variables:', missing)
-    process.exit(1)
+    // In server environments (like Vercel) it's preferable to configure env vars
+    // in the hosting dashboard. Avoid exiting during module import to prevent
+    // crashing serverless function invocations. If you want strict failure,
+    // set STRICT_ENV=1 in the environment to preserve previous behavior.
+    if (process.env.STRICT_ENV === '1') {
+      process.exit(1)
+    }
   }
 }

@@ -1,4 +1,4 @@
-const MAYAR_API_URL = '[api.mayar.id](https://api.mayar.id/hl/v1)'
+const MAYAR_API_URL = 'https://api.mayar.id/hl/v1'
 const MAYAR_API_KEY = process.env.MAYAR_API_KEY
 
 export async function createPayment({ orderId, amount, description, customerEmail, customerName }) {
@@ -14,7 +14,8 @@ export async function createPayment({ orderId, amount, description, customerEmai
       amount,
       description,
       expiredAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-      callbackUrl: `${process.env.FRONTEND_URL}/api/payment/callback`,
+      // callback should point to backend endpoint that receives payment callbacks
+      callbackUrl: `${process.env.BACKEND_URL || process.env.FRONTEND_URL}/api/payment/callback`,
       redirectUrl: `${process.env.FRONTEND_URL}/success`,
       mobile: null,
     }),
