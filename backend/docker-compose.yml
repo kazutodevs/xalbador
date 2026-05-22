@@ -21,7 +21,7 @@ services:
       - MAYAR_API_KEY=${MAYAR_API_KEY}
       - PAYMENT_MODE=${PAYMENT_MODE:-test}
       - FRONTEND_URL=${FRONTEND_URL:-https://xalbador.kazuto.biz.id}
-      - BACKEND_URL=${BACKEND_URL:-https://xalbador-8lqs4m7f.b4a.run}
+      - BACKEND_URL=${BACKEND_URL:-https://xalbador-9rlr6wzb5-novalgamedev-9048s-projects.vercel.app}
     volumes:
       - .:/app
       - /app/node_modules
