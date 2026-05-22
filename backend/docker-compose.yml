@@ -20,7 +20,7 @@ services:
       - DISCORD_CLIENT_SECRET=${DISCORD_CLIENT_SECRET}
       - MAYAR_API_KEY=${MAYAR_API_KEY}
       - PAYMENT_MODE=${PAYMENT_MODE:-test}
-      - FRONTEND_URL=${FRONTEND_URL:-http://localhost:3000}
+      - FRONTEND_URL=${FRONTEND_URL:-https://xalbador.kazuto.biz.id}
       - BACKEND_URL=${BACKEND_URL:-https://xalbador-8lqs4m7f.b4a.run}
     volumes:
       - .:/app

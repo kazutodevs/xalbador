@@ -4,7 +4,7 @@ export const config = {
   paymentMode: process.env.PAYMENT_MODE || 'test',
   host: process.env.HOST || 'localhost',
   
-  frontendUrl: process.env.FRONTEND_URL || 'http://localhost:3000',
+  frontendUrl: process.env.FRONTEND_URL || 'https://xalbador.kazuto.biz.id',
   backendUrl: process.env.BACKEND_URL || 'https://xalbador-8lqs4m7f.b4a.run',
   
   supabase: {

@@ -27,7 +27,7 @@ app.use(cors({
   origin: (origin, callback) => {
     const allowedOrigins = [
       config.frontendUrl,
-      'http://localhost:3000',
+      'https://xalbador.kazuto.biz.id',
       'http://localhost:5173',
     ]
     if (!origin || allowedOrigins.includes(origin)) {
