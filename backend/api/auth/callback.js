@@ -2,7 +2,8 @@ import { supabase } from '../../lib/supabase.js'
 import { createSession } from '../../lib/auth.js'
 import { cors, handleOptions } from '../../lib/middleware.js'
 
-const FRONTEND_URL = process.env.FRONTEND_URL
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000'
+const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:3001'
 
 export default async function handler(req, res) {
   if (handleOptions(req, res)) return
@@ -60,7 +61,7 @@ export default async function handler(req, res) {
 }
 
 async function handleGoogleCallback(code) {
-  const redirectUri = `${FRONTEND_URL}/api/auth/callback?provider=google`
+  const redirectUri = `${BACKEND_URL}/api/auth/callback?provider=google`
   
   // Exchange code for tokens
   const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
@@ -93,7 +94,7 @@ async function handleGoogleCallback(code) {
 }
 
 async function handleDiscordCallback(code) {
-  const redirectUri = `${FRONTEND_URL}/api/auth/callback?provider=discord`
+  const redirectUri = `${BACKEND_URL}/api/auth/callback?provider=discord`
 
   // Exchange code for tokens
   const tokenResponse = await fetch('https://discord.com/api/oauth2/token', {
