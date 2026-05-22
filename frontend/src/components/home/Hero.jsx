@@ -17,7 +17,10 @@ export default function Hero() {
         playsInline
         className="absolute inset-0 w-full h-full object-cover blur-[2px]"
       >
-        <source src="/videos/hero-bg.mp4" type="video/mp4" />
+<source
+  src="https://kcdanyszvnympanrtjff.supabase.co/storage/v1/object/sign/xalbador/videoplayback.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mYzhmZjUxNC1lNmJiLTQzNDctYTM2YS1jMjdmZmI1MzY0MzIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ4YWxiYWRvci92aWRlb3BsYXliYWNrLm1wNCIsImlhdCI6MTc3OTQ0OTE1MiwiZXhwIjoxODEwOTg1MTUyfQ.dTNQN_yWgK0iot7F6wSEO3skURGJc6RskDlQMyB3j5o"
+  type="video/mp4"
+/>
       </video>
 
       {/* Overlay */}
