@@ -1,14 +1,8 @@
 import { useEffect, useState } from 'react'
 import { PlusCircle, Layers, Upload, X } from 'lucide-react'
-import { createClient } from '@supabase/supabase-js'
 import api from '@services/api'
 import Card from '@components/common/Card'
 import toast from 'react-hot-toast'
-
-const supabase = createClient(
-  'https://kcdanyszvnympanrtjff.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjZGFueXN6dm55bXBhbnJ0amZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyNzE0ODMsImV4cCI6MjA5NDg0NzQ4M30.3V1zMSKIg-58OsXYK_qjLEUCvCDfaKp1azY7YBVwKaE'
-)
 
 export default function AdminPanel() {
   const [categories, setCategories] = useState([])
@@ -58,27 +52,23 @@ export default function AdminPanel() {
     if (!imageFile) return null
 
     try {
-      const filename = `${Date.now()}-${imageFile.name}`
-      const { data, error } = await supabase.storage
-        .from('products')
-        .upload(filename, imageFile, {
-          cacheControl: '3600',
-          upsert: false,
-        })
+      const formData = new FormData()
+      formData.append('image', imageFile)
 
-      if (error) {
-        console.error('Supabase upload error:', error)
-        throw new Error(error.message || 'Upload failed')
+      const response = await api.post('/products/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+
+      if (response.data.success && response.data.url) {
+        return response.data.url
+      } else {
+        throw new Error(response.data.error || 'Upload failed')
       }
-
-      const { data: urlData } = supabase.storage
-        .from('products')
-        .getPublicUrl(filename)
-
-      return urlData.publicUrl
     } catch (error) {
       console.error('Image upload error:', error)
-      toast.error(`Failed to upload image: ${error.message}`)
+      toast.error(`Failed to upload image: ${error.response?.data?.error || error.message}`)
       return null
     }
   }
