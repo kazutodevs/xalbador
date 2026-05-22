@@ -2,7 +2,7 @@ import { supabase } from '../../lib/supabase.js'
 import { createSession } from '../../lib/auth.js'
 import { cors, handleOptions } from '../../lib/middleware.js'
 
-const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000'
+const FRONTEND_URL = process.env.FRONTEND_URL
 
 export default async function handler(req, res) {
   if (handleOptions(req, res)) return

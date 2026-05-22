@@ -2,7 +2,7 @@ export const config = {
   port: parseInt(process.env.PORT, 10) || 3001,
   nodeEnv: process.env.NODE_ENV || 'development',
   paymentMode: process.env.PAYMENT_MODE || 'test',
-  host: process.env.HOST || 'localhost',
+  host: process.env.HOST,
   
   frontendUrl: process.env.FRONTEND_URL || 'https://xalbador.kazuto.biz.id',
   backendUrl: process.env.BACKEND_URL || 'https://xalbador-9rlr6wzb5-novalgamedev-9048s-projects.vercel.app',
