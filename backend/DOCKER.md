@@ -27,7 +27,7 @@ cp .env.example .env  # if needed
 # Build and start the development container
 docker-compose up --build
 
-# Server runs at https://xalbador-9rlr6wzb5-novalgamedev-9048s-projects.vercel.app
+# Server runs at https://xalbador.vercel.app
 ```
 
 The container watches for file changes and restarts automatically.
@@ -109,7 +109,7 @@ docker push your-registry/xalbador-backend:latest
 The production image includes a health check at `/api/health`:
 
 ```bash
-curl https://xalbador-9rlr6wzb5-novalgamedev-9048s-projects.vercel.app/api/health
+curl https://xalbador.vercel.app/api/health
 # Response: { "status": "ok", "timestamp": "...", "environment": "production" }
 ```
 
