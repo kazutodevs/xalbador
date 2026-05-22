@@ -112,6 +112,43 @@ export async function createProduct(req, res, next) {
   }
 }
 
+export async function uploadImage(req, res, next) {
+  try {
+    if (!req.file) {
+      throw new AppError('No file provided', 400)
+    }
+
+    const file = req.file
+    const filename = `${Date.now()}-${file.originalname}`
+
+    // Upload to Supabase Storage using service role key (from backend)
+    const { data, error } = await supabase.storage
+      .from('products')
+      .upload(filename, file.buffer, {
+        contentType: file.mimetype,
+        cacheControl: '3600',
+        upsert: false,
+      })
+
+    if (error) {
+      console.error('Supabase storage error:', error)
+      throw new AppError(`Upload failed: ${error.message}`, 500)
+    }
+
+    const { data: urlData } = supabase.storage
+      .from('products')
+      .getPublicUrl(filename)
+
+    res.status(201).json({
+      success: true,
+      url: urlData.publicUrl,
+      filename: filename,
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 export async function createCategory(req, res, next) {
   try {
     const { name, slug, sort_order = 0 } = req.body
