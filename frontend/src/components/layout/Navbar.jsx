@@ -96,68 +96,71 @@ export default function Navbar() {
 
           {/* Right Side */}
           <div className="flex items-center gap-3">
-            {/* Language Toggle */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={toggleLanguage}
-              className="p-2 rounded-xl glass-button"
-              title={t('nav.language')}
-            >
-              <Globe className="w-5 h-5" />
-            </motion.button>
+            <div className="hidden md:flex items-center gap-3">
+              {/* Language Toggle */}
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={toggleLanguage}
+                className="p-2 rounded-xl glass-button"
+                title={t('nav.language')}
+              >
+                <Globe className="w-5 h-5" />
+              </motion.button>
 
-            {/* Theme Toggle */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={toggleTheme}
-              className="p-2 rounded-xl glass-button"
-              title={t('nav.theme')}
-            >
-              {theme === 'dark' ? (
-                <Sun className="w-5 h-5" />
-              ) : (
-                <Moon className="w-5 h-5" />
+              {/* Theme Toggle */}
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={toggleTheme}
+                className="p-2 rounded-xl glass-button"
+                title={t('nav.theme')}
+              >
+                {theme === 'dark' ? (
+                  <Sun className="w-5 h-5" />
+                ) : (
+                  <Moon className="w-5 h-5" />
+                )}
+              </motion.button>
+
+              {/* Cart */}
+              {isAuthenticated && (
+                <Link to="/checkout" className="relative">
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="p-2 rounded-xl glass-button"
+                  >
+                    <ShoppingCart className="w-5 h-5" />
+                    {cartCount > 0 && (
+                      <motion.span
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        className="absolute -top-1 -right-1 w-5 h-5 bg-primary-500 text-white text-xs font-bold rounded-full flex items-center justify-center"
+                      >
+                        {cartCount}
+                      </motion.span>
+                    )}
+                  </motion.div>
+                </Link>
               )}
-            </motion.button>
 
-            {/* Cart */}
-            {isAuthenticated && (
-              <Link to="/checkout" className="relative">
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="p-2 rounded-xl glass-button"
-                >
-                  <ShoppingCart className="w-5 h-5" />
-                  {cartCount > 0 && (
-                    <motion.span
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      className="absolute -top-1 -right-1 w-5 h-5 bg-primary-500 text-white text-xs font-bold rounded-full flex items-center justify-center"
-                    >
-                      {cartCount}
-                    </motion.span>
-                  )}
-                </motion.div>
-              </Link>
-            )}
-
-            {/* Auth / User Menu */}
-            {isAuthenticated ? (
-              <UserMenu user={user} />
-            ) : (
-              <Link to="/auth">
-                <Button size="sm">{t('nav.login')}</Button>
-              </Link>
-            )}
+              {/* Auth / User Menu */}
+              {isAuthenticated ? (
+                <UserMenu user={user} />
+              ) : (
+                <Link to="/auth">
+                  <Button size="sm">{t('nav.login')}</Button>
+                </Link>
+              )}
+            </div>
 
             {/* Mobile Menu Toggle */}
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="p-2 rounded-xl glass-button md:hidden"
+              aria-label={isMobileMenuOpen ? t('nav.closeMenu') : t('nav.openMenu')}
             >
               {isMobileMenuOpen ? (
                 <X className="w-6 h-6" />
@@ -178,7 +181,7 @@ export default function Navbar() {
               className="md:hidden mt-4"
             >
               <div className="glass rounded-2xl p-4 space-y-2">
-                {navLinks.map((link) => {
+                    {navLinks.map((link) => {
                   if (link.protected && !isAuthenticated) return null
                   return (
                     <Link
@@ -196,6 +199,33 @@ export default function Navbar() {
                     </Link>
                   )
                 })}
+
+                <div className="mt-4 border-t border-slate-200/70 dark:border-slate-700/70 pt-4 grid grid-cols-2 gap-3">
+                  <button
+                    onClick={() => {
+                      toggleLanguage()
+                      setIsMobileMenuOpen(false)
+                    }}
+                    className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl glass-button"
+                  >
+                    <Globe className="w-5 h-5" />
+                    <span className="text-sm font-medium">{t('nav.language')}</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      toggleTheme()
+                      setIsMobileMenuOpen(false)
+                    }}
+                    className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl glass-button"
+                  >
+                    {theme === 'dark' ? (
+                      <Sun className="w-5 h-5" />
+                    ) : (
+                      <Moon className="w-5 h-5" />
+                    )}
+                    <span className="text-sm font-medium">{t('nav.theme')}</span>
+                  </button>
+                </div>
               </div>
             </motion.div>
           )}

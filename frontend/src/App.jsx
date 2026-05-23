@@ -19,9 +19,9 @@ function App() {
   return (
     <>
       <Toaster
-        position="top-right"
+        position="bottom-center"
         toastOptions={{
-          duration: 4000,
+          duration: 3000,
           style: {
             background: 'var(--toast-bg)',
             color: 'var(--toast-color)',

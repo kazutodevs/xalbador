@@ -1,27 +1,51 @@
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Sparkles } from 'lucide-react'
+import { Sparkles } from 'lucide-react'
 import Button from '@components/common/Button'
+import { useEffect, useState } from 'react'
 
 export default function Hero() {
   const { t } = useTranslation()
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 767px)')
+    const update = (event) => setIsMobile(event.matches)
+    setIsMobile(media.matches)
+    if (media.addEventListener) {
+      media.addEventListener('change', update)
+    } else {
+      media.addListener(update)
+    }
+    return () => {
+      if (media.removeEventListener) {
+        media.removeEventListener('change', update)
+      } else {
+        media.removeListener(update)
+      }
+    }
+  }, [])
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Video Background */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover blur-[2px]"
-      >
-<source
-  src="https://kcdanyszvnympanrtjff.supabase.co/storage/v1/object/sign/xalbador/videoplayback.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mYzhmZjUxNC1lNmJiLTQzNDctYTM2YS1jMjdmZmI1MzY0MzIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ4YWxiYWRvci92aWRlb3BsYXliYWNrLm1wNCIsImlhdCI6MTc3OTQ0OTE1MiwiZXhwIjoxODEwOTg1MTUyfQ.dTNQN_yWgK0iot7F6wSEO3skURGJc6RskDlQMyB3j5o"
-  type="video/mp4"
-/>
-      </video>
+      {/* Video Background on desktop only; mobile uses static background */}
+      {!isMobile ? (
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover blur-[2px]"
+        >
+          <source
+            src="https://kcdanyszvnympanrtjff.supabase.co/storage/v1/object/sign/xalbador/videoplayback.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mYzhmZjUxNC1lNmJiLTQzNDctYTM2YS1jMjdmZmI1MzY0MzIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ4YWxiYWRvci92aWRlb3BsYXliYWNrLm1wNCIsImlhdCI6MTc3OTQ0OTE1MiwiZXhwIjoxODEwOTg1MTUyfQ.dTNQN_yWgK0iot7F6wSEO3skURGJc6RskDlQMyB3j5o"
+            type="video/mp4"
+          />
+        </video>
+      ) : (
+        <div className="absolute inset-0 w-full h-full bg-slate-950/90" />
+      )}
 
       {/* Overlay */}
       <div className="video-overlay" />

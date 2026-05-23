@@ -66,54 +66,85 @@ export default function Store() {
     )
   })
 
-  const motionProps = isMobile
-    ? {}
-    : {
+  const isDesktop = !isMobile
+  const motionProps = isDesktop
+    ? {
         initial: { opacity: 0, y: 20 },
         animate: { opacity: 1, y: 0 }
       }
+    : {}
 
   return (
     <div className="min-h-screen pt-24 pb-12">
       <div className="container mx-auto px-4">
 
         {/* Header */}
-        <motion.div
-          {...motionProps}
-          className="mb-12"
-        >
-          <h1 className="text-4xl md:text-5xl font-bold font-display mb-4">
-            <span className="gradient-text">{t('store.title')}</span>
-          </h1>
+        {isDesktop ? (
+          <motion.div
+            {...motionProps}
+            className="mb-12"
+          >
+            <h1 className="text-4xl md:text-5xl font-bold font-display mb-4">
+              <span className="gradient-text">{t('store.title')}</span>
+            </h1>
 
-          <p className="text-xl text-slate-600 dark:text-slate-400">
-            {t('store.subtitle')}
-          </p>
-        </motion.div>
+            <p className="text-xl text-slate-600 dark:text-slate-400">
+              {t('store.subtitle')}
+            </p>
+          </motion.div>
+        ) : (
+          <div className="mb-6">
+            <h1 className="text-3xl font-bold font-display mb-3">
+              <span className="gradient-text">{t('store.title')}</span>
+            </h1>
+            <p className="text-base text-slate-600 dark:text-slate-400">
+              {t('store.subtitle')}
+            </p>
+          </div>
+        )}
 
         {/* Search & Filters */}
-        <motion.div
-          {...motionProps}
-          transition={isMobile ? {} : { delay: 0.1 }}
-          className="space-y-6 mb-12"
-        >
-          <div className="relative max-w-md">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+        {isDesktop ? (
+          <motion.div
+            {...motionProps}
+            transition={{ delay: 0.1 }}
+            className="space-y-6 mb-12"
+          >
+            <div className="relative max-w-md">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
 
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder={t('store.search')}
-              className="input-primary pl-12"
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder={t('store.search')}
+                className="input-primary pl-12"
+              />
+            </div>
+
+            <CategoryFilter
+              selected={selectedCategory}
+              onSelect={handleCategorySelect}
+            />
+          </motion.div>
+        ) : (
+          <div className="space-y-4 mb-8">
+            <div className="relative w-full">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder={t('store.search')}
+                className="input-primary pl-11 w-full"
+              />
+            </div>
+            <CategoryFilter
+              selected={selectedCategory}
+              onSelect={handleCategorySelect}
             />
           </div>
-
-          <CategoryFilter
-            selected={selectedCategory}
-            onSelect={handleCategorySelect}
-          />
-        </motion.div>
+        )}
 
         {/* Products */}
         {loading ? (
@@ -131,19 +162,22 @@ export default function Store() {
               {t('store.noProducts')}
             </p>
           </motion.div>
-        ) : (
+        ) : isDesktop ? (
           <motion.div
             {...motionProps}
-            transition={isMobile ? {} : { delay: 0.2 }}
+            transition={{ delay: 0.2 }}
             className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
           >
             {filteredProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-              />
+              <ProductCard key={product.id} product={product} animated />
             ))}
           </motion.div>
+        ) : (
+          <div className="grid gap-4">
+            {filteredProducts.map((product) => (
+              <ProductCard key={product.id} product={product} animated={false} />
+            ))}
+          </div>
         )}
       </div>
     </div>
