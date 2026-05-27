@@ -5,7 +5,7 @@ import { AppError } from '../middleware/error.middleware.js'
 
 export async function createPayment(req, res, next) {
   try {
-    const { orderNumber, items, total, currency = 'IDR' } = req.body
+    const { orderNumber, items, total, currency = 'IDR', phone } = req.body
     const user = req.user
 
     if (!items || items.length === 0) {
@@ -79,13 +79,18 @@ export async function createPayment(req, res, next) {
     }
 
     // LIVE MODE - create Mayar payment
-    const payment = await mayar.createPayment({
-      orderId: orderNumber,
-      amount: total,
-      description: `Order ${orderNumber}`,
-      customerEmail: user.email,
-      customerName: user.name,
-    })
+if (!user.phone) {
+  throw new AppError('Phone number is required', 400)
+}
+
+const payment = await mayar.createPayment({
+  orderId: orderNumber,
+  amount: total,
+  description: `Order ${orderNumber}`,
+  customerEmail: user.email,
+  customerName: user.name,
+  customerMobile: phone,
+})
 
     await supabase
       .from('orders')
