@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { CheckCircle, Home, ShoppingBag, Copy, Check } from 'lucide-react'
@@ -12,8 +12,9 @@ export default function Success() {
   const location = useLocation()
   const [copied, setCopied] = useState(false)
   const [orderData] = useState(location.state || {})
+  const [searchParams] = useSearchParams()
 
-  const orderId = orderData?.orderId
+  const orderId = searchParams.get('orderId') || orderData?.orderId
   const testMode = orderData?.testMode
 
   useEffect(() => {

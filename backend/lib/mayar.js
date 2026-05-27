@@ -42,8 +42,8 @@ export async function createPayment({
       callbackUrl:
         `${process.env.BACKEND_URL || process.env.FRONTEND_URL}/api/payment/callback`,
 
-      redirectUrl:
-        `${process.env.FRONTEND_URL}/success`,
+redirectUrl:
+  `${process.env.FRONTEND_URL}/success?orderId=${orderNumber}`,
     }),
   })
 
