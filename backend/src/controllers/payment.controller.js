@@ -47,7 +47,7 @@ export async function createPayment(req, res, next) {
     // TEST MODE - simulate success
     if (config.paymentMode === 'test') {
       const paymentId = `TEST-${Date.now()}`
-      
+
       await supabase
         .from('orders')
         .update({
@@ -57,24 +57,27 @@ export async function createPayment(req, res, next) {
         })
         .eq('id', order.id)
 
-      // Create purchase records
-const { data: createdItems } = await supabase
-  .from('order_items')
-  .select('id, name')
-  .eq('order_id', order.id)
+      // FIX: Fetch the created order_items so we have their IDs
+      const { data: createdItems } = await supabase
+        .from('order_items')
+        .select('id, name')
+        .eq('order_id', order.id)
 
-for (const item of createdItems) {
-  await supabase.from('purchases').insert({
-    user_id: user.id,
-    order_item_id: item.id, 
-    product_type: items.find(i => i.name === item.name)?.productType || 'general',
-    details: items.find(i => i.name === item.name)?.config || {},
-    status: 'active',
-    expires_at: items.find(i => i.name === item.name)?.productType === 'hosting'
-      ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
-      : null,
-  })
-}
+      // Create purchase records with order_item_id
+      for (const createdItem of createdItems) {
+        const originalItem = items.find((i) => i.name === createdItem.name)
+        await supabase.from('purchases').insert({
+          user_id: user.id,
+          order_item_id: createdItem.id, // FIX: was missing before
+          product_type: originalItem?.productType || 'general',
+          details: originalItem?.config || {},
+          status: 'active',
+          expires_at:
+            originalItem?.productType === 'hosting'
+              ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+              : null,
+        })
+      }
 
       return res.json({
         success: true,
@@ -85,33 +88,32 @@ for (const item of createdItems) {
     }
 
     // LIVE MODE - create Mayar payment
-if (!phone) {
-  throw new AppError('Phone number is required', 400)
-}
+    if (!phone) {
+      throw new AppError('Phone number is required', 400)
+    }
 
-const payment = await mayar.createPayment({
-  orderId: orderNumber,
-  amount: total,
-  description: `Order ${orderNumber}`,
-  customerEmail: user.email,
-  customerName: user.name,
-  customerMobile: phone,
-})
-console.log(payment)
+    const payment = await mayar.createPayment({
+      orderId: orderNumber,
+      amount: total,
+      description: `Order ${orderNumber}`,
+      customerEmail: user.email,
+      customerName: user.name,
+      customerMobile: phone,
+    })
 
     await supabase
       .from('orders')
       .update({
-        payment_id: payment.data.id,
-        payment_url: payment.data.link,
+        payment_id: payment.id,
+        payment_url: payment.link,
       })
       .eq('id', order.id)
 
     res.json({
       success: true,
       orderId: orderNumber,
-      paymentId: payment.data.id,
-      redirectUrl: payment.data.link,
+      paymentId: payment.id,
+      redirectUrl: payment.link,
       testMode: false,
     })
   } catch (error) {
@@ -147,16 +149,16 @@ export async function paymentCallback(req, res, next) {
 
     if (error || !order) throw new AppError('Order not found', 404)
 
-    // Create purchase records
-for (const item of order.order_items) {
-  await supabase.from('purchases').insert({
-    user_id: order.user_id,
-    order_item_id: item.id,
-    product_type: item.product_type || 'general',
-    details: item.config || {},
-    status: 'active',
-  })
-}
+    // FIX: Create purchase records with order_item_id and correct product_type
+    for (const item of order.order_items) {
+      await supabase.from('purchases').insert({
+        user_id: order.user_id,
+        order_item_id: item.id, // already correct
+        product_type: item.product_type || 'general', // FIX: was hardcoded 'general'
+        details: item.config || {},
+        status: 'active',
+      })
+    }
 
     res.json({ success: true })
   } catch (error) {
