@@ -91,6 +91,7 @@ const payment = await mayar.createPayment({
   customerName: user.name,
   customerMobile: phone,
 })
+console.log(payment)
 
     await supabase
       .from('orders')
