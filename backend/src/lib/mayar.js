@@ -24,20 +24,27 @@ class MayarClient {
     return response.json()
   }
 
-  async createPayment({ orderId, amount, description, customerEmail, customerName }) {
-    return this.request('/payment/create', {
-      method: 'POST',
-      body: JSON.stringify({
-        name: customerName,
-        email: customerEmail,
-        amount,
-        description,
-        expiredAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-        callbackUrl: `${config.backendUrl}/api/payment/callback`,
-        redirectUrl: `${config.frontendUrl}/success`,
-      }),
-    })
+async createPayment({ orderId, amount, description, customerEmail, customerName, customerMobile }) {
+  if (!customerMobile) {
+    throw new Error('Customer mobile is required')
   }
+
+  const mobile = customerMobile.replace(/\D/g, '').replace(/^0/, '62')
+
+  return this.request('/payment/create', {
+    method: 'POST',
+    body: JSON.stringify({
+      name: customerName,
+      email: customerEmail,
+      mobile,          
+      amount,
+      description,
+      expiredAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+      callbackUrl: `${config.backendUrl}/api/payment/callback`,
+      redirectUrl: `${config.frontendUrl}/success`,
+    }),
+  })
+}
 
   async verifyPayment(paymentId) {
     return this.request(`/payment/${paymentId}`)
