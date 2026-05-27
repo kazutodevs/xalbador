@@ -31,12 +31,12 @@ async createPayment({ orderId, amount, description, customerEmail, customerName,
 
   const mobile = customerMobile.replace(/\D/g, '').replace(/^0/, '62')
 
-  return this.request('/payment/create', {
+  const result = await this.request('/payment/create', {
     method: 'POST',
     body: JSON.stringify({
       name: customerName,
       email: customerEmail,
-      mobile,          
+      mobile,
       amount,
       description,
       expiredAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
@@ -44,11 +44,14 @@ async createPayment({ orderId, amount, description, customerEmail, customerName,
       redirectUrl: `${config.frontendUrl}/success`,
     }),
   })
+
+  return result.data 
 }
 
-  async verifyPayment(paymentId) {
-    return this.request(`/payment/${paymentId}`)
-  }
+async verifyPayment(paymentId) {
+  const result = await this.request(`/payment/${paymentId}`)
+  return result.data 
+}
 }
 
 export const mayar = new MayarClient()
