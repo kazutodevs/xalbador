@@ -78,3 +78,9 @@ export async function verifyPayment(paymentId) {
 
   return data
 }
+
+// Di bagian BAWAH mayar.js, tambahkan:
+export const mayar = {
+  createPayment,
+  verifyPayment,
+}
