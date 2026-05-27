@@ -96,16 +96,16 @@ console.log(payment)
     await supabase
       .from('orders')
       .update({
-        payment_id: payment.id,
-        payment_url: payment.link,
+        payment_id: payment.data.id,
+        payment_url: payment.data.link,
       })
       .eq('id', order.id)
 
     res.json({
       success: true,
       orderId: orderNumber,
-      paymentId: payment.id,
-      redirectUrl: payment.link,
+      paymentId: payment.data.id,
+      redirectUrl: payment.data.link,
       testMode: false,
     })
   } catch (error) {
