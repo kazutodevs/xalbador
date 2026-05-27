@@ -58,17 +58,23 @@ export async function createPayment(req, res, next) {
         .eq('id', order.id)
 
       // Create purchase records
-      for (const item of items) {
-        await supabase.from('purchases').insert({
-          user_id: user.id,
-          product_type: item.productType || 'general',
-          details: item.config || {},
-          status: 'active',
-          expires_at: item.productType === 'hosting'
-            ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
-            : null,
-        })
-      }
+const { data: createdItems } = await supabase
+  .from('order_items')
+  .select('id, name')
+  .eq('order_id', order.id)
+
+for (const item of createdItems) {
+  await supabase.from('purchases').insert({
+    user_id: user.id,
+    order_item_id: item.id, 
+    product_type: items.find(i => i.name === item.name)?.productType || 'general',
+    details: items.find(i => i.name === item.name)?.config || {},
+    status: 'active',
+    expires_at: items.find(i => i.name === item.name)?.productType === 'hosting'
+      ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+      : null,
+  })
+}
 
       return res.json({
         success: true,
@@ -142,15 +148,15 @@ export async function paymentCallback(req, res, next) {
     if (error || !order) throw new AppError('Order not found', 404)
 
     // Create purchase records
-    for (const item of order.order_items) {
-      await supabase.from('purchases').insert({
-        user_id: order.user_id,
-        order_item_id: item.id,
-        product_type: 'general',
-        details: {},
-        status: 'active',
-      })
-    }
+for (const item of order.order_items) {
+  await supabase.from('purchases').insert({
+    user_id: order.user_id,
+    order_item_id: item.id,
+    product_type: item.product_type || 'general',
+    details: item.config || {},
+    status: 'active',
+  })
+}
 
     res.json({ success: true })
   } catch (error) {
