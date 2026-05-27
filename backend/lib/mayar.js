@@ -7,8 +7,8 @@ function normalizePhone(phone) {
     .replace(/^0/, '62')
 }
 
-export async function createPayment({
-  orderId,
+export async function createPayment({ 
+  orderNumber,
   amount,
   description,
   customerEmail,

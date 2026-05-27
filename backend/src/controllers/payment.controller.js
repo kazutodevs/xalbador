@@ -79,7 +79,7 @@ export async function createPayment(req, res, next) {
     }
 
     // LIVE MODE - create Mayar payment
-if (!user.phone) {
+if (!phone) {
   throw new AppError('Phone number is required', 400)
 }
 
