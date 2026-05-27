@@ -9,7 +9,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/orders', orderRoutes)
 
 const PORT = config.port
-
+app.set('trust proxy', 1)
 app.listen(PORT, () => {
   console.log(`
   ╔════════════════════════════════════════╗

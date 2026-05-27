@@ -26,7 +26,12 @@ export default function Checkout() {
   const isPhoneValid = normalizedPhone.length >= 10
 
   const handlePayment = async () => {
-    if (items.length === 0 || !isPhoneValid) return
+    if (items.length === 0) return
+
+if (!isPhoneValid) {
+  toast.error('Please enter a valid phone number')
+  return
+}
 
     setLoading(true)
 
