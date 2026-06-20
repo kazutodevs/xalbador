@@ -7,11 +7,17 @@ export async function getProfile(req, res) {
 
 export async function getPurchases(req, res, next) {
   try {
-    const { data, error } = await supabase
-      .from('purchases')
-      .select('*')
-      .eq('user_id', req.user.id)
-      .order('created_at', { ascending: false })
+const { data, error } = await supabase
+  .from('purchases')
+  .select(`
+    *,
+    orders:order_id (
+      id,
+      nama
+    )
+  `)
+  .eq('user_id', req.user.id)
+  .order('created_at', { ascending: false })
 
     if (error) throw new AppError(error.message, 500)
 
