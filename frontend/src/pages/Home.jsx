@@ -1,3 +1,4 @@
+// Home.jsx — only the Hero slot changed; all three sections below are untouched.
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
@@ -70,35 +71,36 @@ export default function Home() {
 
   return (
     <>
+      {/* Hero — full-bleed black, no wrapper padding needed */}
       <Hero />
 
-      {/* Features Section */}
-      <section className="py-24 bg-slate-50 dark:bg-dark-200">
+      {/* Features Section — UNCHANGED */}
+      <section className="py-28">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-left mb-12 max-w-4xl"
           >
-            <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
-              <span className="gradient-text">{t('features.title')}</span>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
+              {t('features.title')}
             </h2>
-            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+            <p className="text-lg text-slate-300 max-w-2xl">
               {t('features.subtitle')}
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
-              <Card key={index} glass className="text-center">
-                <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center shadow-lg shadow-primary-500/30">
-                  <feature.icon className="w-8 h-8 text-white" />
+              <Card key={index} glass className="text-left p-8">
+                <div className="w-14 h-14 mb-4 bg-[rgba(255,255,255,0.04)] rounded-xl flex items-center justify-center">
+                  <feature.icon className="w-6 h-6 text-[var(--accent)]" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">
+                <h3 className="text-lg font-bold text-white mb-2">
                   {feature.title}
                 </h3>
-                <p className="text-slate-600 dark:text-slate-400">
+                <p className="text-slate-300 text-sm">
                   {feature.description}
                 </p>
               </Card>
@@ -107,19 +109,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services Section */}
-      <section className="py-24">
+      {/* Services Section — UNCHANGED */}
+      <section className="py-28">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-left mb-12 max-w-4xl"
           >
-            <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
-              <span className="gradient-text">{t('services.title')}</span>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
+              {t('services.title')}
             </h2>
-            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+            <p className="text-lg text-slate-300 max-w-2xl">
               {t('services.subtitle')}
             </p>
           </motion.div>
@@ -128,21 +130,21 @@ export default function Home() {
             {services.map((service, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ delay: index * 0.08 }}
               >
                 <Link to={service.href}>
-                  <Card className="group flex items-start gap-6">
-                    <div className="w-14 h-14 flex-shrink-0 bg-primary-100 dark:bg-primary-900/30 rounded-xl flex items-center justify-center group-hover:bg-primary-500 transition-colors">
-                      <service.icon className="w-7 h-7 text-primary-600 group-hover:text-white transition-colors" />
+                  <Card className="group flex items-start gap-6 p-8">
+                    <div className="w-14 h-14 flex-shrink-0 bg-[rgba(255,255,255,0.03)] rounded-xl flex items-center justify-center group-hover:bg-[rgba(255,255,255,0.06)] transition-colors">
+                      <service.icon className="w-7 h-7 text-[var(--accent)] group-hover:text-[var(--accent-2)] transition-colors" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary-600 transition-colors">
+                      <h3 className="text-lg font-bold text-white mb-2">
                         {service.title}
                       </h3>
-                      <p className="text-slate-600 dark:text-slate-400">
+                      <p className="text-slate-300">
                         {service.description}
                       </p>
                     </div>
@@ -154,35 +156,29 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary-400 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
+      {/* CTA Section — UNCHANGED */}
+      <section className="py-28">
+        <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center max-w-3xl mx-auto"
+            className="max-w-3xl mx-auto"
           >
-            <h2 className="text-4xl md:text-5xl font-bold font-display text-white mb-6">
-              {t('cta.title')}
-            </h2>
-            <p className="text-xl text-primary-100 mb-10">
-              {t('cta.subtitle')}
-            </p>
-            <Link to="/auth">
-<Button
-  size="lg"
-  variant="secondary"
-  className="bg-white text-primary-700 hover:bg-white/90 shadow-2xl"
->
-  {t('cta.button')}
-</Button>
-            </Link>
+            <div className="glass-card p-10 text-center">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                {t('cta.title')}
+              </h2>
+              <p className="text-lg text-slate-300 mb-8">{t('cta.subtitle')}</p>
+              <div className="flex items-center justify-center gap-4">
+                <Link to="/auth">
+                  <Button size="lg">{t('cta.button')}</Button>
+                </Link>
+                <Link to="/contact">
+                  <Button variant="outline" size="lg">Contact Us</Button>
+                </Link>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>

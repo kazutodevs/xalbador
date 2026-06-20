@@ -1,0 +1,209 @@
+{
+  "nav": {
+    "home": "Home",
+    "store": "Store",
+    "account": "Account",
+    "login": "Login",
+    "language": "Language",
+    "theme": "Theme"
+  },
+  "hero": {
+    "badge": "Premium Digital Services",
+    "titlePart1": "Power Your",
+    "titlePart2": "Digital Dreams",
+    "subtitle": "Professional hosting, development, and digital services for your projects. Fast, reliable, and affordable.",
+    "getStarted": "Get Started",
+    "startNow": "Start Now",
+    "uptime": "Uptime",
+    "support": "Support",
+    "customers": "Customers"
+  },
+  "features": {
+    "title": "Why Choose Us",
+    "subtitle": "We provide the best services with premium quality and affordable prices",
+    "fast": {
+      "title": "Lightning Fast",
+      "description": "High-performance servers with SSD storage and global CDN"
+    },
+    "secure": {
+      "title": "Secure & Safe",
+      "description": "Enterprise-grade security with DDoS protection and SSL"
+    },
+    "uptime": {
+      "title": "99.9% Uptime",
+      "description": "Guaranteed uptime with redundant infrastructure"
+    },
+    "support": {
+      "title": "24/7 Support",
+      "description": "Expert support team available around the clock"
+    }
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "Comprehensive digital services tailored to your needs",
+    "hosting": {
+      "title": "Game Hosting",
+      "description": "High-performance hosting for SA:MP and Minecraft servers"
+    },
+    "bot": {
+      "title": "Bot Development",
+      "description": "Custom Discord and Telegram bots for your community"
+    },
+    "development": {
+      "title": "Custom Development",
+      "description": "Professional scripts and plugins for your game server"
+    },
+    "minecraft": {
+      "title": "Minecraft Services",
+      "description": "Hosting, skins, and custom plugins for Minecraft servers"
+    }
+  },
+  "cta": {
+    "title": "Ready to Get Started?",
+    "subtitle": "Join thousands of satisfied customers and take your project to the next level",
+    "button": "Start Your Journey"
+  },
+  "auth": {
+    "welcome": "Welcome to Xalbador",
+    "subtitle": "Sign in to access your dashboard",
+    "google": "Continue with Google",
+    "discord": "Continue with Discord",
+    "secure": "Secure authentication",
+    "terms": {
+      "prefix": "By signing in, you agree to our",
+      "tos": "Terms of Service",
+      "and": "and",
+      "privacy": "Privacy Policy"
+    }
+  },
+  "store": {
+    "title": "Store",
+    "subtitle": "Browse our products and services",
+    "search": "Search products...",
+    "all": "All",
+    "noProducts": "No products found"
+  },
+  "categories": {
+    "hosting-samp": "SA:MP Hosting",
+    "hosting-bot": "Bot Hosting",
+    "developer-bot": "Bot Developer",
+    "developer-package": "Developer Package",
+    "minecraft-skin": "Minecraft Skin",
+    "hosting-minecraft": "Minecraft Hosting",
+    "custom-script": "Custom Script",
+    "server-rental": "Server Rental",
+    "server-bundle": "Server Bundle"
+  },
+  "product": {
+    "customizable": "Customizable",
+    "startFrom": "from",
+    "customize": "Customize",
+    "addToCart": "Add to Cart"
+  },
+  "cart": {
+    "added": "Added to cart!"
+  },
+  "configurator": {
+    "hosting": {
+      "title": "Configure Hosting",
+      "subtitle": "Customize your server specifications"
+    },
+    "developer": {
+      "title": "Configure Development",
+      "subtitle": "Customize your project requirements"
+    },
+    "unsupported": "Configuration not available for this product",
+    "checkout": "Checkout",
+    "continueShopping": "Continue Shopping"
+  },
+  "hosting": {
+    "cpu": "CPU Cores",
+    "ram": "Memory",
+    "storage": "Storage",
+    "estimatedPrice": "Estimated Monthly Price"
+  },
+  "developer": {
+    "duration": "Development Time",
+    "requests": "Revision Requests",
+    "revisions": "revisions",
+    "complexity": "Project Complexity",
+    "priceMultiplier": "multiplier",
+    "estimatedPrice": "Estimated Price"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "emptyCart": "Your cart is empty",
+    "emptyCartSubtitle": "Add some products to get started",
+    "browseProducts": "Browse Products",
+    "customConfiguration": "Custom configuration",
+    "orderSummary": "Order Summary",
+    "total": "Total",
+    "payNow": "Pay Now",
+    "securePayment": "Secured by Mayar Payment Gateway",
+    "paymentSuccess": "Payment successful!",
+    "paymentError": "Payment failed. Please try again."
+  },
+  "success": {
+    "title": "Thank You!",
+    "subtitle": "Your order has been placed successfully",
+    "orderId": "Order ID",
+    "viewPurchases": "View My Purchases",
+    "continueShopping": "Continue Shopping"
+  },
+  "account": {
+    "title": "My Account",
+    "tabs": {
+      "purchases": "Purchases",
+      "profile": "Profile",
+      "settings": "Settings"
+    },
+    "noPurchases": "You haven't made any purchases yet",
+    "status": {
+      "active": "Active",
+      "pending": "Pending",
+      "expired": "Expired",
+      "completed": "Completed"
+    },
+    "expiresOn": "Expires on",
+    "openPanel": "Open Panel",
+    "contactDeveloper": "Contact Developer",
+    "progress": "Progress",
+    "copied": "Copied to clipboard!",
+    "memberSince": "Member Since",
+    "settingsTitle": "Account Settings",
+    "settingsComingSoon": "Settings options coming soon..."
+  },
+  "menu": {
+    "profile": "Profile",
+    "purchases": "My Purchases",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "footer": {
+    "description": "Your trusted partner for digital services, hosting, and development solutions.",
+    "product": "Products",
+    "company": "Company",
+    "legal": "Legal",
+    "hosting": "Hosting",
+    "developer": "Developer",
+    "minecraft": "Minecraft",
+    "about": "About Us",
+    "contact": "Contact",
+    "careers": "Careers",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "refund": "Refund Policy",
+    "rights": "All rights reserved.",
+    "madeWith": "Made by",
+    "inIndonesia": "in Indonesia"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "subtitle": "The page you're looking for doesn't exist or has been moved.",
+    "backHome": "Back to Home",
+    "goBack": "Go Back"
+  },
+  "common": {
+    "back": "Back"
+  }
+}

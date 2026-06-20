@@ -13,6 +13,7 @@ const Configurator = lazy(() => import('@pages/Configurator'))
 const Checkout = lazy(() => import('@pages/Checkout'))
 const Success = lazy(() => import('@pages/Success'))
 const Account = lazy(() => import('@pages/Account'))
+const Contact = lazy(() => import('@pages/Contact'))
 const NotFound = lazy(() => import('@pages/NotFound'))
 
 function App() {
@@ -77,6 +78,7 @@ function App() {
               }
             />
             <Route path="*" element={<NotFound />} />
+            <Route path="contact" element={<Contact />} />
           </Route>
         </Routes>
       </Suspense>

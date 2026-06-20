@@ -84,20 +84,20 @@ export default function Store() {
             {...motionProps}
             className="mb-12"
           >
-            <h1 className="text-4xl md:text-5xl font-bold font-display mb-4">
-              <span className="gradient-text">{t('store.title')}</span>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">
+              {t('store.title')}
             </h1>
 
-            <p className="text-xl text-slate-600 dark:text-slate-400">
+            <p className="text-lg text-slate-300">
               {t('store.subtitle')}
             </p>
           </motion.div>
         ) : (
           <div className="mb-6">
-            <h1 className="text-3xl font-bold font-display mb-3">
-              <span className="gradient-text">{t('store.title')}</span>
+            <h1 className="text-3xl font-bold mb-3 text-white">
+              {t('store.title')}
             </h1>
-            <p className="text-base text-slate-600 dark:text-slate-400">
+            <p className="text-base text-slate-300">
               {t('store.subtitle')}
             </p>
           </div>

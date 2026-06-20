@@ -6,6 +6,7 @@ const variants = {
   primary: 'btn-primary',
   secondary: 'btn-secondary',
   ghost: 'btn-ghost',
+  outline: 'btn-outline',
   danger: 'px-6 py-3 bg-red-500 text-white font-semibold rounded-xl shadow-lg shadow-red-500/30 hover:shadow-red-500/50 hover:bg-red-600 transition-all duration-300',
 }
 

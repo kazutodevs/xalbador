@@ -213,7 +213,7 @@ xalbador v2/
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone <https://github.com/kazutodevs/xalbador>
 cd xalbador\ v2
 
 # Backend setup

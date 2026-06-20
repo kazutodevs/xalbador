@@ -11,13 +11,17 @@ export default function Card({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      // avoid animating opacity here to prevent multiplicative (double) fades
+      // when a parent element also animates opacity. Keep motion for
+      // translate (y) only so children/parents don't produce compounded
+      // opacity effects.
+      initial={{ y: 20 }}
+      whileInView={{ y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
       className={classNames(
         'rounded-2xl',
-        glass ? 'glass-card' : 'bg-white dark:bg-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-slate-900/50',
+        glass ? 'glass-card' : 'glass-card',
         hover && 'card-hover',
         padding,
         className

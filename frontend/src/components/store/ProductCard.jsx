@@ -35,31 +35,31 @@ export default function ProductCard({ product }) {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      whileHover={{ y: -5 }}
+      whileHover={{ y: -6 }}
       className="group glass-card overflow-hidden"
     >
       {/* Image */}
-      <div className="relative h-48 overflow-hidden">
+      <div className="relative h-48 overflow-hidden bg-slate-900">
         <img
           src={product.image_url || '/placeholder-product.png'}
           alt={name}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
         {product.is_custom && (
-          <div className="absolute top-4 right-4 px-3 py-1 bg-gradient-to-r from-primary-500 to-primary-600 text-white text-xs font-bold rounded-full flex items-center gap-1">
+          <div className="absolute top-4 right-4 px-3 py-1 bg-[rgba(255,255,255,0.06)] text-white text-xs font-semibold rounded-full flex items-center gap-2 backdrop-blur-sm">
             <Sparkles className="w-3 h-3" />
             {t('product.customizable')}
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-100 group-hover:opacity-100 transition-opacity" />
       </div>
 
       {/* Content */}
       <div className="p-6">
-        <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 line-clamp-1">
+        <h3 className="text-lg font-bold text-white mb-2 line-clamp-1">
           {name}
         </h3>
-        <p className="text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-2">
+        <p className="text-sm text-slate-300 mb-4 line-clamp-2">
           {description}
         </p>
 
@@ -69,7 +69,7 @@ export default function ProductCard({ product }) {
             {product.features.slice(0, 3).map((feature, index) => (
               <span
                 key={index}
-                className="px-2 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 text-xs font-medium rounded-lg"
+                className="px-2 py-1 bg-white/10 text-slate-200 text-xs font-medium rounded-full"
               >
                 {feature}
               </span>
@@ -80,11 +80,11 @@ export default function ProductCard({ product }) {
         {/* Price */}
         <div className="flex items-center justify-between mb-4">
           <div>
-            <span className="text-2xl font-bold text-slate-900 dark:text-white">
+            <span className="text-2xl font-bold text-white">
               {formatCurrency(product.price)}
             </span>
             {product.is_custom && (
-              <span className="text-sm text-slate-500 ml-1">{t('product.startFrom')}</span>
+              <span className="text-sm text-slate-300 ml-1">{t('product.startFrom')}</span>
             )}
           </div>
         </div>

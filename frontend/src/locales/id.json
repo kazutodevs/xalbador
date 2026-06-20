@@ -1,0 +1,209 @@
+{
+  "nav": {
+    "home": "Beranda",
+    "store": "Toko",
+    "account": "Akun",
+    "login": "Masuk",
+    "language": "Bahasa",
+    "theme": "Tema"
+  },
+  "hero": {
+    "badge": "Layanan Digital Premium",
+    "titlePart1": "Wujudkan",
+    "titlePart2": "Impian Digital Anda",
+    "subtitle": "Hosting profesional, pengembangan, dan layanan digital untuk proyek Anda. Cepat, handal, dan terjangkau.",
+    "getStarted": "Mulai Sekarang",
+    "startNow": "Ayo Mulai",
+    "uptime": "Uptime",
+    "support": "Dukungan",
+    "customers": "Pelanggan"
+  },
+  "features": {
+    "title": "Mengapa Memilih Kami",
+    "subtitle": "Kami menyediakan layanan terbaik dengan kualitas premium dan harga terjangkau",
+    "fast": {
+      "title": "Super Cepat",
+      "description": "Server performa tinggi dengan penyimpanan SSD dan CDN global"
+    },
+    "secure": {
+      "title": "Aman & Terlindungi",
+      "description": "Keamanan tingkat enterprise dengan perlindungan DDoS dan SSL"
+    },
+    "uptime": {
+      "title": "99.9% Uptime",
+      "description": "Uptime terjamin dengan infrastruktur redundan"
+    },
+    "support": {
+      "title": "Dukungan 24/7",
+      "description": "Tim support ahli tersedia sepanjang waktu"
+    }
+  },
+  "services": {
+    "title": "Layanan Kami",
+    "subtitle": "Layanan digital komprehensif yang disesuaikan dengan kebutuhan Anda",
+    "hosting": {
+      "title": "Game Hosting",
+      "description": "Hosting performa tinggi untuk server SA:MP dan Minecraft"
+    },
+    "bot": {
+      "title": "Pengembangan Bot",
+      "description": "Bot Discord dan Telegram kustom untuk komunitas Anda"
+    },
+    "development": {
+      "title": "Pengembangan Kustom",
+      "description": "Script dan plugin profesional untuk game server Anda"
+    },
+    "minecraft": {
+      "title": "Layanan Minecraft",
+      "description": "Hosting, skin, dan plugin kustom untuk server Minecraft"
+    }
+  },
+  "cta": {
+    "title": "Siap Untuk Memulai?",
+    "subtitle": "Bergabunglah dengan ribuan pelanggan puas dan tingkatkan proyek Anda",
+    "button": "Mulai Perjalanan Anda"
+  },
+  "auth": {
+    "welcome": "Selamat Datang di Xalbador",
+    "subtitle": "Masuk untuk mengakses dashboard Anda",
+    "google": "Lanjutkan dengan Google",
+    "discord": "Lanjutkan dengan Discord",
+    "secure": "Autentikasi aman",
+    "terms": {
+      "prefix": "Dengan masuk, Anda menyetujui",
+      "tos": "Syarat Layanan",
+      "and": "dan",
+      "privacy": "Kebijakan Privasi"
+    }
+  },
+  "store": {
+    "title": "Toko",
+    "subtitle": "Jelajahi produk dan layanan kami",
+    "search": "Cari produk...",
+    "all": "Semua",
+    "noProducts": "Tidak ada produk ditemukan"
+  },
+  "categories": {
+    "hosting-samp": "Hosting SA:MP",
+    "hosting-bot": "Hosting Bot",
+    "developer-bot": "Developer Bot",
+    "developer-package": "Paket Developer",
+    "minecraft-skin": "Design Skin Minecraft",
+    "hosting-minecraft": "Hosting Minecraft",
+    "custom-script": "Custom Script",
+    "server-rental": "Rental Server",
+    "server-bundle": "Bundle Server"
+  },
+  "product": {
+    "customizable": "Dapat Dikustomisasi",
+    "startFrom": "mulai dari",
+    "customize": "Kustomisasi",
+    "addToCart": "Tambah ke Keranjang"
+  },
+  "cart": {
+    "added": "Ditambahkan ke keranjang!"
+  },
+  "configurator": {
+    "hosting": {
+      "title": "Konfigurasi Hosting",
+      "subtitle": "Sesuaikan spesifikasi server Anda"
+    },
+    "developer": {
+      "title": "Konfigurasi Development",
+      "subtitle": "Sesuaikan kebutuhan proyek Anda"
+    },
+    "unsupported": "Konfigurasi tidak tersedia untuk produk ini",
+    "checkout": "Checkout",
+    "continueShopping": "Lanjut Belanja"
+  },
+  "hosting": {
+    "cpu": "Core CPU",
+    "ram": "Memori",
+    "storage": "Penyimpanan",
+    "estimatedPrice": "Estimasi Harga Bulanan"
+  },
+  "developer": {
+    "duration": "Waktu Pengerjaan",
+    "requests": "Permintaan Revisi",
+    "revisions": "revisi",
+    "complexity": "Kompleksitas Proyek",
+    "priceMultiplier": "pengali",
+    "estimatedPrice": "Estimasi Harga"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "emptyCart": "Keranjang Anda kosong",
+    "emptyCartSubtitle": "Tambahkan beberapa produk untuk memulai",
+    "browseProducts": "Jelajahi Produk",
+    "customConfiguration": "Konfigurasi kustom",
+    "orderSummary": "Ringkasan Pesanan",
+    "total": "Total",
+    "payNow": "Bayar Sekarang",
+    "securePayment": "Diamankan oleh Mayar Payment Gateway",
+    "paymentSuccess": "Pembayaran berhasil!",
+    "paymentError": "Pembayaran gagal. Silakan coba lagi."
+  },
+  "success": {
+    "title": "Terima Kasih!",
+    "subtitle": "Pesanan Anda telah berhasil dibuat",
+    "orderId": "ID Pesanan",
+    "viewPurchases": "Lihat Produk Saya",
+    "continueShopping": "Lanjut Belanja"
+  },
+  "account": {
+    "title": "Akun Saya",
+    "tabs": {
+      "purchases": "Pembelian",
+      "profile": "Profil",
+      "settings": "Pengaturan"
+    },
+    "noPurchases": "Anda belum melakukan pembelian",
+    "status": {
+      "active": "Aktif",
+      "pending": "Menunggu",
+      "expired": "Kadaluarsa",
+      "completed": "Selesai"
+    },
+    "expiresOn": "Berakhir pada",
+    "openPanel": "Buka Panel",
+    "contactDeveloper": "Hubungi Developer",
+    "progress": "Progres",
+    "copied": "Disalin ke clipboard!",
+    "memberSince": "Bergabung Sejak",
+    "settingsTitle": "Pengaturan Akun",
+    "settingsComingSoon": "Opsi pengaturan segera hadir..."
+  },
+  "menu": {
+    "profile": "Profil",
+    "purchases": "Pembelian Saya",
+    "settings": "Pengaturan",
+    "logout": "Keluar"
+  },
+  "footer": {
+    "description": "Partner terpercaya Anda untuk layanan digital, hosting, dan solusi pengembangan.",
+    "product": "Produk",
+    "company": "Perusahaan",
+    "legal": "Legal",
+    "hosting": "Hosting",
+    "developer": "Developer",
+    "minecraft": "Minecraft",
+    "about": "Tentang Kami",
+    "contact": "Kontak",
+    "careers": "Karir",
+    "privacy": "Kebijakan Privasi",
+    "terms": "Syarat Layanan",
+    "refund": "Kebijakan Refund",
+    "rights": "Hak cipta dilindungi.",
+    "madeWith": "Dibuat oleh",
+    "inIndonesia": "di Indonesia"
+  },
+  "notFound": {
+    "title": "Halaman Tidak Ditemukan",
+    "subtitle": "Halaman yang Anda cari tidak ada atau telah dipindahkan.",
+    "backHome": "Kembali ke Beranda",
+    "goBack": "Kembali"
+  },
+  "common": {
+    "back": "Kembali"
+  }
+}
