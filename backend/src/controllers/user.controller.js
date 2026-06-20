@@ -13,7 +13,7 @@ const { data, error } = await supabase
     *,
     orders:order_id (
       id,
-      nama
+      name
     )
   `)
   .eq('user_id', req.user.id)
