@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { Trash2, Plus, Minus, CreditCard, ShoppingBag } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useCart } from '@context/CartContext'
 import { createPayment } from '@services/payment'
 import Button from '@components/common/Button'
@@ -16,6 +16,7 @@ export default function Checkout() {
 
   const [loading, setLoading] = useState(false)
   const [phone, setPhone] = useState('')
+  const inFlightRef = useRef(false)
 
   // FIX: getTotal() dipanggil langsung saat render, otomatis reactive karena
   // items berubah → komponen re-render → getTotal() dihitung ulang
@@ -31,6 +32,9 @@ export default function Checkout() {
       return
     }
 
+    // Prevent double submission: synchronous ref prevents race between clicks and state updates
+    if (inFlightRef.current) return
+    inFlightRef.current = true
     setLoading(true)
     try {
       const result = await createPayment({
@@ -54,6 +58,7 @@ export default function Checkout() {
       toast.error(t('checkout.paymentError'))
     } finally {
       setLoading(false)
+      inFlightRef.current = false
     }
   }
 

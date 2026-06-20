@@ -17,6 +17,13 @@ export default async function handler(req, res) {
     return res.status(401).json({ error: 'Unauthorized' })
   }
 
+  // Diagnostic log to help debug admin bypass behavior
+  try {
+    console.log('[payment/create] authenticated user:', { id: user.id, admin: user.admin })
+  } catch (e) {
+    console.log('[payment/create] authenticated user (unable to stringify)', user)
+  }
+
   const { orderNumber, items, total, currency } = req.body
 
   // Create order in database
@@ -51,7 +58,14 @@ export default async function handler(req, res) {
 
   // Admin bypass: if the authenticated user is an admin, mark order as paid
   // and create purchases immediately without redirecting to Mayar.
-  if (user?.admin === 1) {
+  // Accept multiple admin representations (1, '1', true) for robustness.
+  const isAdmin = Boolean(
+    user?.admin === 1 || user?.admin === '1' || user?.admin === true
+  )
+
+  console.log('[payment/create] isAdmin:', isAdmin)
+
+  if (isAdmin) {
     const adminPaymentId = `ADMIN-${Date.now()}`
 
     await supabase
