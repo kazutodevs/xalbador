@@ -42,9 +42,9 @@ export default function Checkout() {
 
       if (result.success) {
         clearCart()
-        if (result.testMode) {
+        if (result.testMode || result.adminBypass) {
           toast.success(t('checkout.paymentSuccess'))
-          navigate('/success', { state: { orderId: result.orderId, testMode: true } })
+          navigate('/success', { state: { orderId: result.orderId, testMode: !!result.testMode, adminBypass: !!result.adminBypass } })
         } else if (result.redirectUrl) {
           window.location.href = result.redirectUrl
         }

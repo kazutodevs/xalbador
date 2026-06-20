@@ -49,6 +49,41 @@ export default async function handler(req, res) {
 
   await supabase.from('order_items').insert(orderItems)
 
+  // Admin bypass: if the authenticated user is an admin, mark order as paid
+  // and create purchases immediately without redirecting to Mayar.
+  if (user?.admin === 1) {
+    const adminPaymentId = `ADMIN-${Date.now()}`
+
+    await supabase
+      .from('orders')
+      .update({
+        status: 'paid',
+        payment_id: adminPaymentId,
+        paid_at: new Date().toISOString(),
+      })
+      .eq('id', order.id)
+
+    // Create purchase records for admin
+    for (const item of items) {
+      await supabase.from('purchases').insert({
+        user_id: user.id,
+        product_type: item.productType || 'general',
+        details: item.config || {},
+        status: 'active',
+        expires_at: item.productType === 'hosting'
+          ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+          : null,
+      })
+    }
+
+    return res.json({
+      success: true,
+      orderId: orderNumber,
+      paymentId: adminPaymentId,
+      adminBypass: true,
+    })
+  }
+
   // Test mode - simulate success
   if (PAYMENT_MODE === 'test') {
     await supabase
