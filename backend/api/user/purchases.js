@@ -6,19 +6,23 @@ export async function getUserPurchases(req, res, next) {
     const user = req.user
 
     const { data, error } = await supabase
-      .from('purchases')
-      .select(`
-        *,
-        order_item:order_item_id (
-          id,
-          name,
-          price,
-          quantity,
-          total
-        )
-      `)
-      .eq('user_id', user.id)
-      .order('created_at', { ascending: false })
+  .from('purchases')
+  .select(`
+    *,
+    order_item:order_item_id (
+      id,
+      name,
+      price,
+      quantity,
+      total
+    ),
+    orders:order_id (
+      id,
+      nama
+    )
+  `)
+  .eq('user_id', user.id)
+  .order('created_at', { ascending: false })
 
     if (error) {
       throw new AppError(error.message, 500)
