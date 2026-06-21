@@ -8,19 +8,19 @@ export const config = {
   backendUrl: process.env.BACKEND_URL || 'https://api.kazuto.biz.id',
   
   supabase: {
-    url: 'https://kcdanyszvnympanrtjff.supabase.co',
-    serviceKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjZGFueXN6dm55bXBhbnJ0amZmIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3OTI3MTQ4MywiZXhwIjoyMDk0ODQ3NDgzfQ.jnU_tC3xYXuyNn9WUvpP4Vf48FK9uCOqTyuzV67QBv0',
+    url: process.env.SUPABASE_URL,
+    serviceKey: process.env.SUPABASE_SERVICE_KEY,
   },
   
   jwt: {
-    secret: process.env.JWT_SECRET || '5ca3afd5-dae6-49b3-8bb4-5374c611fe29',
-    expiresIn: process.env.JWT_EXPIRES_IN || '30d',
+    secret: process.env.JWT_SECRET,
+    expiresIn: process.env.JWT_EXPIRES_IN,
   },
   
   oauth: {
     google: {
-      clientId: '367213523042-1d5443mligan1vor7lqp1rtftqt46mbk.apps.googleusercontent.com',
-      clientSecret: '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',
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     },
     discord: {
       clientId: process.env.DISCORD_CLIENT_ID,
@@ -30,7 +30,7 @@ export const config = {
   
   mayar: {
     apiKey: process.env.MAYAR_API_KEY,
-    apiUrl: process.env.MAYAR_API_URL || 'https://api.mayar.id/hl/v1',
+    apiUrl: process.env.MAYAR_API_URL,
   },
 }
 
