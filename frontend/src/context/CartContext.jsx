@@ -1,84 +1,100 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState, useCallback, useMemo } from 'react'
 
 const CartContext = createContext()
 
+function areConfigsEqual(a, b) {
+  try {
+    return JSON.stringify(a || null) === JSON.stringify(b || null)
+  } catch (e) {
+    return false
+  }
+}
+
 export function CartProvider({ children }) {
   const [items, setItems] = useState(() => {
-    const saved = localStorage.getItem('cart')
-    return saved ? JSON.parse(saved) : []
+    try {
+      const saved = localStorage.getItem('cart')
+      return saved ? JSON.parse(saved) : []
+    } catch (e) {
+      return []
+    }
   })
 
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(items))
+    try {
+      localStorage.setItem('cart', JSON.stringify(items))
+    } catch (e) {
+      // ignore
+    }
   }, [items])
 
-  const addItem = (item) => {
+  const addItem = useCallback((item) => {
     setItems((prev) => {
-      const existingIndex = prev.findIndex(
-        (i) => i.id === item.id && JSON.stringify(i.config) === JSON.stringify(item.config)
+      const idx = prev.findIndex(
+        (i) => i.id === item.id && areConfigsEqual(i.config, item.config)
       )
-      
-      if (existingIndex > -1) {
+
+      if (idx > -1) {
         const updated = [...prev]
-        updated[existingIndex].quantity += item.quantity || 1
+        updated[idx] = {
+          ...updated[idx],
+          quantity: (Number(updated[idx].quantity) || 0) + (Number(item.quantity) || 1),
+        }
         return updated
       }
-      
-      return [...prev, { ...item, quantity: item.quantity || 1 }]
+
+      return [...prev, { ...item, quantity: Number(item.quantity) || 1 }]
     })
-  }
+  }, [])
 
-  const removeItem = (itemId, config = null) => {
+  const removeItem = useCallback((itemId, config = null) => {
     setItems((prev) =>
-      prev.filter(
-        (item) =>
-          !(item.id === itemId && JSON.stringify(item.config) === JSON.stringify(config))
-      )
+      prev.filter((it) => !(it.id === itemId && areConfigsEqual(it.config, config)))
     )
-  }
+  }, [])
 
-  const updateQuantity = (itemId, quantity, config = null) => {
-    if (quantity <= 0) {
-      removeItem(itemId, config)
-      return
-    }
+  const updateQuantity = useCallback((itemId, quantity, config = null) => {
+    const qty = Number(quantity)
+    setItems((prev) => {
+      if (qty <= 0) {
+        return prev.filter((it) => !(it.id === itemId && areConfigsEqual(it.config, config)))
+      }
 
-    setItems((prev) =>
-      prev.map((item) =>
-        item.id === itemId && JSON.stringify(item.config) === JSON.stringify(config)
-          ? { ...item, quantity }
-          : item
+      return prev.map((it) =>
+        it.id === itemId && areConfigsEqual(it.config, config) ? { ...it, quantity: qty } : it
       )
-    )
-  }
+    })
+  }, [])
 
-  const clearCart = () => {
-    setItems([])
-  }
+  const clearCart = useCallback(() => setItems([]), [])
 
-  const getTotal = () => {
-    return items.reduce((sum, item) => sum + item.price * item.quantity, 0)
-  }
+  const total = useMemo(() => {
+    return items.reduce((sum, item) => sum + Number(item.price || 0) * Number(item.quantity || 0), 0)
+  }, [items])
 
-  const getItemCount = () => {
-    return items.reduce((sum, item) => sum + item.quantity, 0)
-  }
+  const count = useMemo(() => {
+    return items.reduce((sum, item) => sum + Number(item.quantity || 0), 0)
+  }, [items])
 
-  return (
-    <CartContext.Provider
-      value={{
-        items,
-        addItem,
-        removeItem,
-        updateQuantity,
-        clearCart,
-        getTotal,
-        getItemCount,
-      }}
-    >
-      {children}
-    </CartContext.Provider>
+  const getTotal = useCallback(() => total, [total])
+  const getItemCount = useCallback(() => count, [count])
+
+  const value = useMemo(
+    () => ({
+      items,
+      addItem,
+      removeItem,
+      updateQuantity,
+      clearCart,
+      getTotal,
+      getItemCount,
+      total,
+      count,
+    }),
+    [items, addItem, removeItem, updateQuantity, clearCart, getTotal, getItemCount, total, count]
   )
+
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>
 }
 
 export function useCart() {
