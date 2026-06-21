@@ -58,16 +58,23 @@ export async function createPayment(req, res, next) {
           paid_at: new Date().toISOString(),
         })
         .eq('id', order.id)
+      // Ensure order_items exist (they should have been created earlier)
+      const { data: createdItems } = await supabase
+        .from('order_items')
+        .select('id, name')
+        .eq('order_id', order.id)
 
-      // Create purchase records for admin
-      for (const item of items) {
+      // Create purchase records with order_item_id so frontend shows correct products
+      for (const createdItem of createdItems || []) {
+        const originalItem = items.find((i) => i.name === createdItem.name)
         await supabase.from('purchases').insert({
           user_id: user.id,
-          product_type: item.productType || 'general',
-          details: item.config || {},
+          order_item_id: createdItem.id,
+          product_type: originalItem?.productType || 'general',
+          details: originalItem?.config || {},
           status: 'active',
           expires_at:
-            item.productType === 'hosting'
+            originalItem?.productType === 'hosting'
               ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
               : null,
         })
