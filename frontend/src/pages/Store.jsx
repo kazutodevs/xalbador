@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { Search } from 'lucide-react'
+import useDebounce from '@hooks/useDebounce'
 import api from '@services/api'
 import ProductCard from '@components/store/ProductCard'
 import CategoryFilter from '@components/store/CategoryFilter'
@@ -18,9 +19,58 @@ export default function Store() {
 
   const selectedCategory = searchParams.get('category')
 
+  const debouncedSearch = useDebounce(search, 350)
+
+  const controllerRef = useRef(null)
+
   useEffect(() => {
-    fetchProducts()
-  }, [selectedCategory])
+    // abort previous
+    if (controllerRef.current) controllerRef.current.abort()
+    const controller = new AbortController()
+    controllerRef.current = controller
+
+    const doFetch = async () => {
+      setLoading(true)
+      try {
+        const params = selectedCategory ? { category: selectedCategory } : {}
+        if (debouncedSearch && debouncedSearch.trim() !== '') params.q = debouncedSearch
+        const response = await api.get('/products', { params, signal: controller.signal })
+        setProducts(response.data)
+      } catch (error) {
+        if (error.name !== 'CanceledError' && error.name !== 'AbortError') {
+          console.error('Failed to fetch products:', error)
+        }
+      } finally {
+        if (!controller.signal.aborted) setLoading(false)
+      }
+    }
+
+    doFetch()
+
+    return () => {
+      controller.abort()
+    }
+  }, [selectedCategory, debouncedSearch])
+
+  const immediateFetch = async (query = search) => {
+    if (controllerRef.current) controllerRef.current.abort()
+    const controller = new AbortController()
+    controllerRef.current = controller
+
+    setLoading(true)
+    try {
+      const params = selectedCategory ? { category: selectedCategory } : {}
+      if (query && query.trim() !== '') params.q = query
+      const response = await api.get('/products', { params, signal: controller.signal })
+      setProducts(response.data)
+    } catch (error) {
+      if (error.name !== 'CanceledError' && error.name !== 'AbortError') {
+        console.error('Failed to fetch products:', error)
+      }
+    } finally {
+      if (!controller.signal.aborted) setLoading(false)
+    }
+  }
 
   useEffect(() => {
     const checkMobile = () => {
@@ -117,6 +167,7 @@ export default function Store() {
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
+                onKeyDown={(e) => { if (e.key === 'Enter') immediateFetch() }}
                 placeholder={t('store.search')}
                 className="input-primary pl-12"
               />
@@ -135,6 +186,7 @@ export default function Store() {
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
+                onKeyDown={(e) => { if (e.key === 'Enter') immediateFetch() }}
                 placeholder={t('store.search')}
                 className="input-primary pl-11 w-full"
               />

@@ -19,7 +19,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'https://xalbador-production.up.railway.app',
+        target: 'https://api.kazuto.biz.id',
         changeOrigin: true,
       },
     },

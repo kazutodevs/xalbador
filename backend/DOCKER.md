@@ -27,7 +27,7 @@ cp .env.example .env  # if needed
 # Build and start the development container
 docker-compose up --build
 
-# Server runs at https://xalbador-production.up.railway.app
+# Server runs at https://api.kazuto.biz.id
 ```
 
 The container watches for file changes and restarts automatically.
@@ -109,7 +109,7 @@ docker push your-registry/xalbador-backend:latest
 The production image includes a health check at `/api/health`:
 
 ```bash
-curl https://xalbador-production.up.railway.app/api/health
+curl https://api.kazuto.biz.id/api/health
 # Response: { "status": "ok", "timestamp": "...", "environment": "production" }
 ```
 

@@ -21,7 +21,7 @@ services:
       - MAYAR_API_KEY=${MAYAR_API_KEY}
       - PAYMENT_MODE=${PAYMENT_MODE:-test}
       - FRONTEND_URL=${FRONTEND_URL:-https://xalbador.kazuto.biz.id}
-      - BACKEND_URL=${BACKEND_URL:-https://xalbador-production.up.railway.app}
+      - BACKEND_URL=${BACKEND_URL:-https://api.kazuto.biz.id}
     volumes:
       - .:/app
       - /app/node_modules
