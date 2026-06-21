@@ -17,7 +17,7 @@ import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { Menu, X, Sun, Moon, Globe, ShoppingCart } from 'lucide-react'
+import { Menu, X, Sun, Moon, Globe, ShoppingCart, LogOut } from 'lucide-react'
 import { useTheme } from '@context/ThemeContext'
 import { useAuth } from '@context/AuthContext'
 import { useCart } from '@context/CartContext'
@@ -30,7 +30,7 @@ export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const { t, i18n } = useTranslation()
   const { theme, toggleTheme } = useTheme()
-  const { user, isAuthenticated } = useAuth()
+  const { user, isAuthenticated, logout } = useAuth()
   const { getItemCount } = useCart()
   const location = useLocation()
 
@@ -220,6 +220,32 @@ export default function Navbar() {
                   )
                 })}
 
+                {/* Cart + Logout for mobile */}
+                {isAuthenticated && (
+                  <Link
+                    to="/checkout"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-white/60 hover:bg-white/5 hover:text-white transition-colors"
+                  >
+                    <ShoppingCart className="w-5 h-5" />
+                    <span>{t('nav.cart', 'Cart')}</span>
+                    {cartCount > 0 && (
+                      <span className="ml-auto inline-flex items-center justify-center w-5 h-5 bg-blue-500 text-white text-xs font-bold rounded-full">
+                        {cartCount}
+                      </span>
+                    )}
+                  </Link>
+                )}
+
+                {isAuthenticated && (
+                  <button
+                    onClick={() => { setIsMobileMenuOpen(false); logout() }}
+                    className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-sm font-medium text-white/60 hover:bg-white/5 hover:text-white transition-colors"
+                  >
+                    <LogOut className="w-5 h-5 text-red-400" />
+                    <span className="font-medium">{t('menu.logout')}</span>
+                  </button>
+                )}
                 {/* Mobile utility row — kept theme toggle here for accessibility */}
                 <div className="mt-3 pt-3 border-t border-white/10 grid grid-cols-2 gap-2">
                   <button
