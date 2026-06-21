@@ -4,6 +4,9 @@ import { useTranslation } from 'react-i18next'
 import { Trash2, Plus, Minus, CreditCard, ShoppingBag } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
 import { useCart } from '@context/CartContext'
+import { useAuth } from '@context/AuthContext'
+import api from '@services/api'
+import { generateOrderNumber } from '@utils/helpers'
 import { createPayment } from '@services/payment'
 import Button from '@components/common/Button'
 import { formatCurrency } from '@utils/helpers'
@@ -13,6 +16,7 @@ export default function Checkout() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { items, updateQuantity, removeItem, clearCart, getTotal } = useCart()
+  const { user } = useAuth()
 
   const [loading, setLoading] = useState(false)
   const [phone, setPhone] = useState('')
@@ -57,6 +61,43 @@ export default function Checkout() {
       }
     } catch (error) {
       console.error('Payment error:', error)
+      toast.error(t('checkout.paymentError'))
+    } finally {
+      setLoading(false)
+      inFlightRef.current = false
+    }
+  }
+
+  const handleAdminDummyPay = async () => {
+    // Only for admin users
+    if (!(Number(user?.admin) === 1)) return
+
+    if (items.length === 0) return
+
+    if (inFlightRef.current) return
+    inFlightRef.current = true
+    setLoading(true)
+    try {
+      const orderNumber = generateOrderNumber()
+      const body = {
+        orderNumber,
+        items,
+        total,
+        currency: 'IDR',
+      }
+
+      const resp = await api.post('/payment/create', body)
+      const result = resp.data
+
+      if (result?.success) {
+        clearCart()
+        toast.success(t('checkout.paymentSuccess'))
+        navigate('/success', { state: { orderId: result.orderId || orderNumber, adminBypass: !!result.adminBypass } })
+      } else {
+        toast.error(t('checkout.paymentError'))
+      }
+    } catch (error) {
+      console.error('Admin dummy pay error:', error)
       toast.error(t('checkout.paymentError'))
     } finally {
       setLoading(false)
@@ -279,6 +320,19 @@ export default function Checkout() {
                 <CreditCard className="w-5 h-5" />
                 {t('checkout.payNow')}
               </Button>
+
+              {Number(user?.admin) === 1 && (
+                <div className="mt-3">
+                  <Button
+                    variant="secondary"
+                    onClick={handleAdminDummyPay}
+                    loading={loading}
+                    className="w-full"
+                  >
+                    Dummy pay for admin only
+                  </Button>
+                </div>
+              )}
 
               <p className="text-xs text-center text-slate-500 mt-4">
                 {t('checkout.securePayment')}

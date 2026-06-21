@@ -22,8 +22,15 @@ export default function Store() {
   const debouncedSearch = useDebounce(search, 350)
 
   const controllerRef = useRef(null)
+  const lastParamsRef = useRef(null)
 
   useEffect(() => {
+    // build key for params to avoid duplicate requests
+    const key = `${selectedCategory || ''}::${debouncedSearch || ''}`
+    if (lastParamsRef.current === key) {
+      return
+    }
+
     // abort previous
     if (controllerRef.current) controllerRef.current.abort()
     const controller = new AbortController()
@@ -34,12 +41,16 @@ export default function Store() {
       try {
         const params = selectedCategory ? { category: selectedCategory } : {}
         if (debouncedSearch && debouncedSearch.trim() !== '') params.q = debouncedSearch
+        // mark as requested to prevent duplicates
+        lastParamsRef.current = key
         const response = await api.get('/products', { params, signal: controller.signal })
         setProducts(response.data)
       } catch (error) {
         if (error.name !== 'CanceledError' && error.name !== 'AbortError') {
           console.error('Failed to fetch products:', error)
         }
+        // on error reset lastParams so retrying is possible
+        lastParamsRef.current = null
       } finally {
         if (!controller.signal.aborted) setLoading(false)
       }
