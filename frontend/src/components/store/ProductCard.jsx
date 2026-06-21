@@ -39,7 +39,7 @@ export default function ProductCard({ product }) {
       className="group glass-card overflow-hidden"
     >
       {/* Image */}
-      <div className="relative h-48 overflow-hidden bg-slate-900">
+      <div className="relative h-36 md:h-48 overflow-hidden bg-slate-900">
         <img
           src={product.image_url || '/placeholder-product.png'}
           alt={name}
@@ -55,18 +55,18 @@ export default function ProductCard({ product }) {
       </div>
 
       {/* Content */}
-      <div className="p-6">
-        <h3 className="text-lg font-bold text-white mb-2 line-clamp-1">
+        <div className="p-4 md:p-6">
+        <h3 className="text-sm md:text-lg font-bold text-white mb-2 line-clamp-1">
           {name}
         </h3>
-        <p className="text-sm text-slate-300 mb-4 line-clamp-2">
+        <p className="text-xs md:text-sm text-slate-300 mb-3 md:mb-4 line-clamp-2">
           {description}
         </p>
 
         {/* Features */}
         {product.features && product.features.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-4">
-            {product.features.slice(0, 3).map((feature, index) => (
+          <div className="hidden sm:flex flex-wrap gap-2 mb-3 md:mb-4">
+            {product.features.slice(0, 2).map((feature, index) => (
               <span
                 key={index}
                 className="px-2 py-1 bg-white/10 text-slate-200 text-xs font-medium rounded-full"
@@ -80,7 +80,7 @@ export default function ProductCard({ product }) {
         {/* Price */}
         <div className="flex items-center justify-between mb-4">
           <div>
-            <span className="text-2xl font-bold text-white">
+            <span className="text-lg md:text-2xl font-bold text-white">
               {formatCurrency(product.price)}
             </span>
             {product.is_custom && (
@@ -90,14 +90,14 @@ export default function ProductCard({ product }) {
         </div>
 
         {/* Actions */}
-        <div className="flex gap-3">
+        <div className="flex gap-2">
           {product.is_custom ? (
-            <Button onClick={handleCustomize} className="flex-1 flex items-center justify-center gap-2">
+            <Button onClick={handleCustomize} className="flex-1 flex items-center justify-center gap-2 text-sm py-2 md:py-3">
               <Settings className="w-4 h-4" />
               {t('product.customize')}
             </Button>
           ) : (
-            <Button onClick={handleAddToCart} className="flex-1 flex items-center justify-center gap-2">
+            <Button onClick={handleAddToCart} className="flex-1 flex items-center justify-center gap-2 text-sm py-2 md:py-3">
               <ShoppingCart className="w-4 h-4" />
               {t('product.addToCart')}
             </Button>
