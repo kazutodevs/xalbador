@@ -327,10 +327,14 @@ export default function Checkout() {
                     variant="secondary"
                     onClick={handleAdminDummyPay}
                     loading={loading}
+                    disabled={items.length === 0 || loading || isUpdating}
                     className="w-full"
                   >
                     Dummy pay for admin only
                   </Button>
+                  <p className="text-xs text-slate-500 mt-2">
+                    Admins: phone number not required for dummy payments.
+                  </p>
                 </div>
               )}
 

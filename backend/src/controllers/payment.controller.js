@@ -44,6 +44,43 @@ export async function createPayment(req, res, next) {
 
     if (itemsError) throw new AppError(itemsError.message, 500)
 
+    // Admin bypass: if authenticated user is admin, mark paid and create purchases
+    const isAdmin = Boolean(user?.admin === 1 || user?.admin === '1' || user?.admin === true)
+
+    if (isAdmin) {
+      const adminPaymentId = `ADMIN-${Date.now()}`
+
+      await supabase
+        .from('orders')
+        .update({
+          status: 'paid',
+          payment_id: adminPaymentId,
+          paid_at: new Date().toISOString(),
+        })
+        .eq('id', order.id)
+
+      // Create purchase records for admin
+      for (const item of items) {
+        await supabase.from('purchases').insert({
+          user_id: user.id,
+          product_type: item.productType || 'general',
+          details: item.config || {},
+          status: 'active',
+          expires_at:
+            item.productType === 'hosting'
+              ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+              : null,
+        })
+      }
+
+      return res.json({
+        success: true,
+        orderId: orderNumber,
+        paymentId: adminPaymentId,
+        adminBypass: true,
+      })
+    }
+
     // TEST MODE - simulate success
     if (config.paymentMode === 'test') {
       const paymentId = `TEST-${Date.now()}`
