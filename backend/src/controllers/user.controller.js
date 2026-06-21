@@ -11,7 +11,7 @@ const { data, error } = await supabase
   .from('purchases')
   .select(`
     *,
-    order_items:order_item_id (
+    order_item:order_item_id (
       id,
       name
     )
