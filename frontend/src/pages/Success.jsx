@@ -27,7 +27,7 @@ export default function Success() {
     if (orderId) {
       navigator.clipboard.writeText(orderId)
       setCopied(true)
-      toast.success(t('success.orderIdCopied') || 'Order ID copied!')
+      toast.success(t('success.orderIdCopied', 'Order ID copied!'))
       setTimeout(() => setCopied(false), 2000)
     }
   }
@@ -62,7 +62,9 @@ export default function Success() {
             transition={{ delay: 0.3 }}
             className="text-3xl font-bold text-white mb-2"
           >
-            {testMode ? t('Gokil') : t('success.orderConfirmed')}
+            {testMode 
+              ? t('Gokil', 'Gokil') 
+              : t('success.orderConfirmed', 'Order Confirmed')}
           </motion.h1>
 
           {/* Subtitle */}
@@ -73,9 +75,8 @@ export default function Success() {
             className="text-slate-400 mb-8"
           >
             {testMode
-              ? t('Berhasil beli coy') || 'This is a test transaction'
-              : t('success.orderPlacedMessage') ||
-                'Thank you for your order! We have received your payment.'}
+              ? t('testMode.message', 'This is a test transaction')
+              : t('success.orderPlacedMessage', 'Thank you for your order! We have received your payment.')}
           </motion.p>
 
           {/* Order Details */}
@@ -85,7 +86,7 @@ export default function Success() {
             transition={{ delay: 0.5 }}
             className="bg-slate-700/50 rounded-xl p-6 mb-8 border border-slate-600/50"
           >
-            <p className="text-sm text-slate-400 mb-2">{t('Nomor Orderan')}</p>
+            <p className="text-sm text-slate-400 mb-2">{t('order.number', 'Nomor Orderan')}</p>
             <div className="flex items-center justify-between gap-2">
               <p className="text-lg font-mono font-bold text-white break-all">{orderId}</p>
               <button
@@ -128,7 +129,7 @@ export default function Success() {
               className="w-full flex items-center justify-center gap-2"
             >
               <ShoppingBag className="w-5 h-5" />
-              {t('success.continueShopping')}
+              {t('success.continueShopping', 'Continue Shopping')}
             </Button>
 
             <button
@@ -136,7 +137,7 @@ export default function Success() {
               className="w-full rounded-2xl bg-slate-700 hover:bg-slate-600 text-white font-semibold px-5 py-3 transition-colors flex items-center justify-center gap-2"
             >
               <Home className="w-5 h-5" />
-              {t('Back to Home')}
+              {t('nav.backToHome', 'Back to Home')}
             </button>
           </motion.div>
 
@@ -147,7 +148,7 @@ export default function Success() {
             transition={{ delay: 0.8 }}
             className="text-xs text-slate-500 mt-6"
           >
-            {t('Need Help')}?{' '}
+            {t('support.needHelp', 'Need Help?')} {' '}
             <a href="mailto:support@xalbador.com" className="text-primary-400 hover:text-primary-300">
               contact support
             </a>

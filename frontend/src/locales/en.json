@@ -5,7 +5,8 @@
     "account": "Account",
     "login": "Login",
     "language": "Language",
-    "theme": "Theme"
+    "theme": "Theme",
+    "backToHome": "Back to Home"
   },
   "hero": {
     "badge": "Premium Digital Services",
@@ -148,7 +149,10 @@
     "subtitle": "Your order has been placed successfully",
     "orderId": "Order ID",
     "viewPurchases": "View My Purchases",
-    "continueShopping": "Continue Shopping"
+    "continueShopping": "Continue Shopping",
+    "orderConfirmed": "Order Confirmed",
+    "orderPlacedMessage": "Thank you for your order! We have received your payment.",
+    "orderIdCopied": "Order ID copied!"
   },
   "account": {
     "title": "My Account",
@@ -205,5 +209,16 @@
   },
   "common": {
     "back": "Back"
-  }
+  },
+  "order": {
+    "number": "Order Number"
+  },
+  "testMode": {
+    "message": "This is a test transaction."
+  },
+  "support": {
+    "needHelp": "Need Help?"
+  },
+  "Gokil": "Awesome",
+  "Berhasil beli coy": "Successfully purchased bro"
 }

@@ -5,7 +5,8 @@
     "account": "Akun",
     "login": "Masuk",
     "language": "Bahasa",
-    "theme": "Tema"
+    "theme": "Tema",
+    "backToHome": "Kembali ke Beranda"
   },
   "hero": {
     "badge": "Layanan Digital Premium",
@@ -148,7 +149,10 @@
     "subtitle": "Pesanan Anda telah berhasil dibuat",
     "orderId": "ID Pesanan",
     "viewPurchases": "Lihat Produk Saya",
-    "continueShopping": "Lanjut Belanja"
+    "continueShopping": "Lanjut Belanja",
+    "orderConfirmed": "Pesanan Dikonfirmasi",
+    "orderPlacedMessage": "Terima kasih atas pesanan Anda! Kami telah menerima pembayaran Anda.",
+    "orderIdCopied": "Nomor Pesanan disalin!"
   },
   "account": {
     "title": "Akun Saya",
@@ -205,5 +209,16 @@
   },
   "common": {
     "back": "Kembali"
-  }
+  },
+  "order": {
+    "number": "Nomor Orderan"
+  },
+  "testMode": {
+    "message": "Ini adalah transaksi uji coba (test)."
+  },
+  "support": {
+    "needHelp": "Butuh Bantuan?"
+  },
+  "Gokil": "Gokil",
+  "Berhasil beli coy": "Berhasil beli coy"
 }
