@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { Trash2, Plus, Minus, CreditCard, ShoppingBag } from 'lucide-react'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useCart } from '@context/CartContext'
 import { createPayment } from '@services/payment'
 import Button from '@components/common/Button'
@@ -16,7 +16,9 @@ export default function Checkout() {
 
   const [loading, setLoading] = useState(false)
   const [phone, setPhone] = useState('')
+  const [isUpdating, setIsUpdating] = useState(false)
   const inFlightRef = useRef(false)
+  const updateTimerRef = useRef(null)
 
   // FIX: getTotal() dipanggil langsung saat render, otomatis reactive karena
   // items berubah → komponen re-render → getTotal() dihitung ulang
@@ -60,6 +62,39 @@ export default function Checkout() {
       setLoading(false)
       inFlightRef.current = false
     }
+  }
+
+  // cleanup timer on unmount
+  useEffect(() => {
+    return () => {
+      if (updateTimerRef.current) clearTimeout(updateTimerRef.current)
+    }
+  }, [])
+
+  const scheduleUpdateClear = () => {
+    setIsUpdating(true)
+    if (updateTimerRef.current) clearTimeout(updateTimerRef.current)
+    updateTimerRef.current = setTimeout(() => {
+      setIsUpdating(false)
+      updateTimerRef.current = null
+    }, 500)
+  }
+
+  const handleDecrease = (item) => {
+    const newQty = Number(item.quantity) - 1
+    updateQuantity(item.id, newQty, item.config)
+    scheduleUpdateClear()
+  }
+
+  const handleIncrease = (item) => {
+    const newQty = Number(item.quantity) + 1
+    updateQuantity(item.id, newQty, item.config)
+    scheduleUpdateClear()
+  }
+
+  const handleRemove = (item) => {
+    removeItem(item.id, item.config)
+    scheduleUpdateClear()
   }
 
   if (items.length === 0) {
@@ -110,7 +145,7 @@ export default function Checkout() {
                 transition={{ delay: index * 0.05 }}
                 className="glass-card p-6"
               >
-                <div className="flex items-center gap-4">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                   {item.image && (
                     <img
                       src={item.image}
@@ -134,12 +169,12 @@ export default function Checkout() {
                     </p>
                   </div>
 
-                  {/* Quantity controls */}
-                  <div className="flex items-center gap-2 flex-shrink-0">
+                  <div className="flex items-center gap-2 mt-3 sm:mt-0">
                     <button
-                      onClick={() => updateQuantity(item.id, item.quantity - 1, item.config)}
+                      onClick={() => handleDecrease(item)}
                       className="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
                       aria-label="Decrease quantity"
+                      disabled={isUpdating}
                     >
                       <Minus className="w-3.5 h-3.5" />
                     </button>
@@ -149,29 +184,29 @@ export default function Checkout() {
                     </span>
 
                     <button
-                      onClick={() => updateQuantity(item.id, item.quantity + 1, item.config)}
+                      onClick={() => handleIncrease(item)}
                       className="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
                       aria-label="Increase quantity"
+                      disabled={isUpdating}
                     >
                       <Plus className="w-3.5 h-3.5" />
                     </button>
-                  </div>
 
-                  {/* Subtotal per item */}
-                  <div className="w-24 text-right flex-shrink-0">
-                    <p className="font-bold text-primary-600">
-                      {formatCurrency(item.price * item.quantity)}
-                    </p>
-                  </div>
+                    <div className="ml-auto text-right">
+                      <p className="font-bold text-primary-600">
+                        {formatCurrency(item.price * item.quantity)}
+                      </p>
+                    </div>
 
-                  {/* Remove */}
-                  <button
-                    onClick={() => removeItem(item.id, item.config)}
-                    className="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors flex-shrink-0"
-                    aria-label="Remove item"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
+                    <button
+                      onClick={() => handleRemove(item)}
+                      className="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                      aria-label="Remove item"
+                      disabled={isUpdating}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -238,7 +273,7 @@ export default function Checkout() {
               <Button
                 onClick={handlePayment}
                 loading={loading}
-                disabled={!isPhoneValid || loading}
+                disabled={!isPhoneValid || loading || isUpdating}
                 className="w-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <CreditCard className="w-5 h-5" />
