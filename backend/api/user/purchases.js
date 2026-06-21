@@ -5,18 +5,18 @@ export async function getUserPurchases(req, res, next) {
   try {
     const user = req.user
 
-const { data, error } = await supabase
-  .from('purchases')
-  .select(`
-    *,
-    order_item:order_item_id (
-      id,
-      name,
-      price
-    )
-  `)
-  .eq('user_id', req.user.id)
-  .order('created_at', { ascending: false })
+    const { data, error } = await supabase
+      .from('purchases')
+      .select(`
+        *,
+        order_item:order_items (
+          id,
+          name,
+          price
+        )
+      `)
+      .eq('user_id', req.user.id)
+      .order('created_at', { ascending: false })
 
     if (error) {
       throw new AppError(error.message, 500)
@@ -37,7 +37,7 @@ export async function getPurchaseById(req, res, next) {
       .from('purchases')
       .select(`
         *,
-        order_item:order_item_id (
+        order_item:order_items (
           id,
           name,
           price,
@@ -59,11 +59,7 @@ export async function getPurchaseById(req, res, next) {
   }
 }
 
-export async function updatePurchaseDetails(
-  req,
-  res,
-  next
-) {
+export async function updatePurchaseDetails(req, res, next) {
   try {
     const user = req.user
     const { id } = req.params
@@ -79,7 +75,7 @@ export async function updatePurchaseDetails(
       .eq('user_id', user.id)
       .select(`
         *,
-        order_item:order_item_id (
+        order_item:order_items (
           id,
           name,
           price,
@@ -90,10 +86,7 @@ export async function updatePurchaseDetails(
       .single()
 
     if (error || !data) {
-      throw new AppError(
-        'Failed to update purchase',
-        500
-      )
+      throw new AppError('Failed to update purchase', 500)
     }
 
     res.json({

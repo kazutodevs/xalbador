@@ -42,6 +42,7 @@ export async function optionalAuth(req, res, next) {
       if (session) {
         req.user = session.users
         req.session = session
+        window.history.replaceState({}, '', window.location.pathname) // Clear token from URL if present})
       }
     }
     
