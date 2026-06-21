@@ -4,7 +4,7 @@ import { AppError } from '../middleware/error.middleware.js'
 export async function getUserPurchases(req, res, next) {
   try {
     const user = req.user
-
+// Fetch purchases with related order item details
     const { data, error } = await supabase
       .from('purchases')
       .select(`
